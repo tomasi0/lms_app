@@ -1,0 +1,147 @@
+﻿/* 한글폰트 */
+@font-face {
+  font-family: "GmarketSansMedium";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.root {
+  display: grid;
+  grid-template-columns: 1.5fr 8.5fr;
+  width: 80%;
+  margin: 0 auto;
+  min-height: 100vh;
+}
+
+.userInfo-box, .userLecture-box, .userDelete-box {
+  padding: 30px 100px 50px 100px;
+  width: 100%;
+  /* height: 500px; */
+  background-color: whitesmoke;
+}
+
+.userInfoBoxTitle, .userLectureBoxTitle, .userDeleteBoxTitle {
+  margin-bottom: 30px;
+  font-size: 30px;
+  font-family: 500;
+}
+
+.userDeleteBtn{
+  width: 150px;
+  height: 50px;
+  background-color: crimson;
+  color: white;
+  font-weight: 800;
+  text-align: center;
+  line-height: 35px;
+  border-radius: 15px;
+  cursor: pointer;
+  margin: 50px auto;
+  font-size: 1.2rem;
+  line-height: 250%;
+}
+
+.userDataUpdateBtn:hover, .userDataUpdateBtn2:hover, .adressSearchButton:hover {
+  background-color: lightblue;
+  color: dodgerblue;
+}
+
+.userDataUpdateBtn1:hover, .userDeleteBtn:hover {
+  background-color: orange;
+  color: crimson;
+}
+
+.userInfo-box, .userLecture-box, .userDelete-box {
+  padding: 30px 100px 50px 100px;
+  width: 100%;
+  /* height: 500px; */
+  background-color: whitesmoke;
+}
+
+.userInfoBoxTitle, .userLectureBoxTitle, .userDeleteBoxTitle {
+  margin-bottom: 30px;
+  font-size: 30px;
+  font-family: 500;
+}
+
+.userLectureStudyingContainer, .userLectureCancelContainer, .userDeleteContainer, .userLectureCompleteContainer {
+  width: 100%;
+  padding: 20px;
+}
+
+.deleteList {
+  background-color: white;
+  border: 1px solid #333333;
+  height: 80px;
+  font-size: 20px;
+}
+
+.deleteList > th {
+  border: 1px solid #333333;
+}
+
+.studying-table, .cancel-table, .delete-table, .complete-table {
+  width: 100%;
+  border-collapse: collapse;
+  overflow: hidden;
+  background-color: white;
+}
+
+.delete-table {
+  border: 1px solid #333333;
+  margin-bottom: 70px;
+}
+
+.delete-table > tbody {
+  border: 3px solid #333333;
+}
+
+.studying-table td, .cancel-table td, .delete-table td {
+  text-align: center;
+}
+
+.userDelete-box > h2 {
+  color: crimson;
+}
+
+.userDeleteReasonTitle {
+  font-size: 26px;
+  font-family: 500;
+  margin-bottom: 10px;
+}
+
+.userDeleteNotice1 {
+  font-size: 20px;
+  text-align: center;
+  margin: 30px auto 10px auto;
+}
+
+.userDeleteNotice2 {
+  font-size: 24px;
+  color: dodgerblue;
+  text-align: center;
+  margin: 5px auto 30px auto;
+}
+
+.deleteSelectBox {
+  scale: 2.0;
+}
+
+.userDeleteReasonBox{
+  width: 100%;
+  border-top: 2px solid #333333;
+  border-bottom: 2px solid #333333;
+  background-color: rgb(242, 242, 242);
+}
+
+#userDeleteReason {
+  width: 100%;
+  outline: none;
+  background: transparent;
+  border: none;
+  padding: 10px;
+  font-size: 1.5rem;
+  overflow: hidden
+}

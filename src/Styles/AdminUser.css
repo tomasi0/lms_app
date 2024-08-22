@@ -1,0 +1,14 @@
+﻿/* AdminUser.css */
+.layout-container {
+  display: flex;
+}
+
+.sidebar {
+  width: 250px; /* Adjust as needed */
+}
+
+.content-container {
+  flex: 1;
+  padding: 20px;
+  /* Add any additional styling you need for the content area */
+}

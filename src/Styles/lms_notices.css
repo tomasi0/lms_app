@@ -1,0 +1,351 @@
+/* 한글폰트 */
+@font-face {
+    font-family: "GmarketSansMedium";
+    src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff")
+      format("woff");
+    font-weight: normal;
+    font-style: normal;
+}
+  
+/* 전체적용 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Poppins, GmarketSansMedium;
+    text-decoration: none;
+    color: inherit;
+}
+
+.root {
+    width: 80%;
+    margin: 0 auto;
+}
+
+/* body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+} */
+
+/* .container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+} */
+
+.content {
+    width: 100%; 
+    display: grid;
+    grid-template-columns: 1.5fr 8.5fr;
+}
+
+aside {
+    width: 100%;
+    background-color: #f4f4f4;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    margin-right: 20px;
+    z-index:2;
+}
+
+aside ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+aside ul li {
+    margin-bottom: 10px;
+}
+
+aside ul li a {
+    display: block;
+    padding: 10px 15px;
+    color: #333;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+aside ul li a:hover {
+    background-color: #007BFF;
+    color: white;
+}
+
+aside ul li a.active {
+    background-color: #007BFF;
+    color: white;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* main {
+    flex-grow: 1;
+    padding: 20px;
+    background-color: #fafafa;
+} */
+
+main {
+    padding: 20px;
+    background-color: #fafafa;
+    min-height: 81vh;
+}
+
+main h1 {
+    text-align: left;
+    margin: 20px;
+}
+
+#notice-table {
+    width: 90%;
+    border-collapse: collapse;
+    margin: 0 auto 20px auto;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #f4f4f4;
+}
+
+th:nth-child(1) {
+    width: 10%;
+}
+
+th:nth-child(2) {
+    width: 10%;
+}
+
+th:nth-child(3) {
+    width: 45%;
+}
+
+th:nth-child(4) {
+    width: 10%;
+}
+
+th:nth-child(5) {
+    width: 15%;
+}
+
+th:nth-child(6) {
+    width: 10%;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#page-numbers {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pagination div {
+    margin: 0 10px;
+    cursor: pointer;
+}
+
+#page-numbers {
+    margin: 0 10px;
+}
+
+.pagination button {
+    margin: 0 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+#create-notice-btn {
+    display: block;
+    width: 200px;
+    margin: 20px auto;
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#create-notice-btn:hover {
+    background-color: #0056b3;
+}
+
+#delete-notice-btn {
+    display: block;
+    width: 100px;
+    margin: 10px auto;
+    padding: 8px 16px;
+    background-color: #FF4136;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#delete-notice-btn:hover {
+    background-color: #C0392B;
+}
+
+/* 상세 내용 스타일 */
+.notice-detail {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin-top: 20px;
+    background-color: #fafafa;
+    border-radius: 10px;
+}
+
+.notice-detail h2 {
+    margin-top: 0;
+    font-size: 24px;
+    color: #333;
+}
+
+.notice-detail p {
+    margin: 10px 0;
+    font-size: 16px;
+    color: #555;
+}
+
+.notice-detail p strong {
+    color: #000;
+}
+
+.notice-detail #detail-content {
+    margin-top: 20px;
+    line-height: 1.6;
+    color: #444;
+}
+
+/* 버튼 스타일 */
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#back-to-list {
+    background-color: #007BFF;
+    color: white;
+    margin-right: 10px;
+}
+
+#back-to-list:hover {
+    background-color: #0056b3;
+}
+
+#delete-notice-btn {
+    background-color: #FF4136;
+    color: white;
+}
+
+#delete-notice-btn:hover {
+    background-color: #C0392B;
+}
+
+/* 작성 버튼 스타일 */
+#create-notice-btn {
+    display: block;
+    width: 200px;
+    margin: 20px auto;
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#create-notice-btn:hover {
+    background-color: #0056b3;
+}
+
+/* 새 공지사항 작성 폼 스타일 */
+.notice-form {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin-top: 20px;
+    background-color: #fafafa;
+    border-radius: 10px;
+    max-width: 600px;
+    margin: 20px auto;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.notice-form h2 {
+    margin-top: 0;
+    font-size: 24px;
+    color: #333;
+    text-align: center;
+}
+
+.notice-form label {
+    display: block;
+    margin: 10px 0 5px;
+    font-size: 16px;
+    color: #555;
+}
+
+.notice-form select,
+.notice-form input[type="text"],
+.notice-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.notice-form textarea {
+    height: 150px;
+    resize: vertical;
+}
+
+.notice-form button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#submit-notice {
+    background-color: #007BFF;
+    color: white;
+    margin-right: 10px;
+}
+
+.notice-title {
+    cursor: pointer;
+}
