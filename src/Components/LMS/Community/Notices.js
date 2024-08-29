@@ -1,172 +1,356 @@
-import React, { useState, useEffect } from "react";
-import { getAllNotices, getNoticeById, createNotice, deleteNotice } from "../../../Api/CommunityApi/CommunityApi"; // API 함수 가져오기
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import { getAllNotices, getNoticeById, getCurrentUser, createNotice, deleteNotice } from "../../../Api/CommunityApi/CommunityApi";
+
+// styled-components 스타일 정의
+const NoticeBoardContainer = styled.div`
+    margin: 20px;
+`;
+
+const Title = styled.h2`
+    margin-bottom: 20px;
+`;
+
+const NoticeTable = styled.table`
+    width: 100%;
+    border-collapse: collapse;
+`;
+
+const TableHead = styled.thead`
+    background-color: #f2f2f2;
+`;
+
+const TableHeader = styled.th`
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+`;
+
+const TableData = styled.td`
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+`;
+
+const PaginationContainer = styled.div`
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+`;
+
+const PaginationButton = styled.button`
+    margin: 0 5px;
+    padding: 5px 10px;
+    background-color: ${(props) => (props.disabled ? '#ddd' : '#007bff')};
+    color: white;
+    border: none;
+    cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
+`;
+
+const CreateNoticeButton = styled.button`
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    display: block;
+    margin-left: auto;
+`;
+
+const NoticeDetail = styled.div`
+    margin: 20px 0;
+    padding: 20px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+`;
+
+const NoticeForm = styled.form`
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+`;
+
+const FormInput = styled.input`
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+`;
+
+const FormTextarea = styled.textarea`
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+`;
+
+const FormSelect = styled.select`
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+`;
+
+const SubmitButton = styled.button`
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    cursor: pointer;
+`;
+
+const CancelButton = styled.button`
+    padding: 10px 20px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    cursor: pointer;
+`;
+
+const DeleteButton = styled.button`
+    padding: 10px 20px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+`;
 
 export function Notices() {
-  // 상태 변수
-  const [notices, setNotices] = useState([]); // 공지사항 목록
-  const [currentPage, setCurrentPage] = useState(1); // 현재 페이지
-  const [totalPages, setTotalPages] = useState(0); // 전체 페이지 수
-  const [selectedNotice, setSelectedNotice] = useState(null); // 선택된 공지사항 (상세보기용)
-  const [showForm, setShowForm] = useState(false); // 공지사항 작성 폼 표시 여부
-  const [newNotice, setNewNotice] = useState({ category: "", title: "", content: "" }); // 새 공지사항
+    const [notices, setNotices] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [page, setPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const [selectedNotice, setSelectedNotice] = useState(null);
+    const [isAdmin, setIsAdmin] = useState(false);
+    const [isFormVisible, setIsFormVisible] = useState(false);
+    const [newNotice, setNewNotice] = useState({ categoryId: '', title: '', content: '' });
+    const noticesPerPage = 5;
 
-  const noticesPerPage = 5;
-
-  // 공지사항 목록을 로드하는 함수
-  useEffect(() => {
-    const fetchNotices = async () => {
-      try {
-        const data = await getAllNotices(currentPage - 1, noticesPerPage);
-        setNotices(data.content);
-        setTotalPages(data.totalPages);
-      } catch (error) {
-        console.error("Error fetching notices:", error);
-      }
+    // 공지사항 카테고리 이름 변환 함수
+    const getCategoryName = (categoryId) => {
+        switch (categoryId) {
+            case '01':
+                return '일반공지';
+            case '02':
+                return '수강정보';
+            case '99':
+                return '기타';
+            default:
+                return '알 수 없음';
+        }
     };
 
-    fetchNotices();
-  }, [currentPage]);
+    // 서버에서 공지사항 데이터를 가져오는 함수
+    const fetchNotices = async (page) => {
+        try {
+            const data = await getAllNotices(page - 1, noticesPerPage);
+            setNotices(data.content);
+            setTotalPages(data.totalPages);
+            setLoading(false);
+        } catch (error) {
+            setError(error);
+            setLoading(false);
+        }
+    };
 
-  // 페이지네이션 변경 처리
-  const handlePageChange = (page) => {
-    if (page > 0 && page <= totalPages) {
-      setCurrentPage(page);
-    }
-  };
+    // 로그인 상태 확인 함수
+    const checkLoginStatus = async () => {
+        try {
+            const user = await getCurrentUser();
+            if (user && user.userId) {
+                const isAdminUser = user.authority && user.authority.authorityName === "ROLE_ADMIN";
+                setIsAdmin(isAdminUser);
+            }
+        } catch (error) {
+            console.error("Error fetching current user:", error);
+        }
+    };
 
-  // 공지사항 상세 정보를 로드하는 함수
-  const loadNoticeDetails = async (id) => {
-    try {
-      const data = await getNoticeById(id);
-      setSelectedNotice(data); // 선택된 공지사항 설정
-      setShowForm(false); // 작성 폼 숨기기
-    } catch (error) {
-      console.error("Error fetching notice details:", error);
-    }
-  };
+    // 게시글 클릭 시 상세 내용을 불러오는 함수
+    const loadNoticeDetails = async (id) => {
+        try {
+            const notice = await getNoticeById(id);
+            if (notice) {
+                setSelectedNotice(notice);
+            } else {
+                console.error("공지사항이 존재하지 않습니다.");
+            }
+        } catch (error) {
+            console.error('Error loading notice details:', error);
+        }
+    };
 
-  // 새 공지사항 작성 함수
-  const handleCreateNotice = async () => {
-    try {
-      await createNotice(newNotice); // 새 공지사항 생성
-      setShowForm(false); // 작성 폼 숨기기
-      setNewNotice({ category: "", title: "", content: "" });
-      setCurrentPage(1); // 첫 페이지로 이동하여 공지사항 목록 다시 로드
-    } catch (error) {
-      console.error("Error creating notice:", error);
-    }
-  };
+    // 게시글 삭제 함수 (관리자 전용)
+    const deleteSelectedNotice = async (id) => {
+        if (window.confirm('정말로 이 공지사항을 삭제하시겠습니까?')) {
+            try {
+                await deleteNotice(id);
+                alert('공지사항이 삭제되었습니다.');
+                setSelectedNotice(null);
+                fetchNotices(page); // 삭제 후 목록 새로고침
+            } catch (error) {
+                console.error('Error deleting notice:', error);
+                alert('공지사항 삭제 중 오류가 발생했습니다.');
+            }
+        }
+    };
 
-  // 공지사항 삭제 함수
-  const handleDeleteNotice = async (id) => {
-    if (window.confirm("정말로 삭제하시겠습니까?")) {
-      try {
-        await deleteNotice(id); // 공지사항 삭제
-        setSelectedNotice(null); // 선택된 공지사항 초기화
-        setCurrentPage(1); // 첫 페이지로 이동하여 공지사항 목록 다시 로드
-      } catch (error) {
-        console.error("Error deleting notice:", error);
-      }
-    }
-  };
+    // 공지사항 작성 폼 제출 함수
+    const submitNotice = async (e) => {
+        e.preventDefault();
+        try {
+            await createNotice({
+                categoryId: newNotice.categoryId,
+                lmsNoticesTitle: newNotice.title,
+                lmsNoticesContent: newNotice.content,
+                user: { userId: '관리자' } // 실제 로그인된 사용자로 교체 필요
+            });
+            alert('새 공지사항이 작성되었습니다.');
+            setIsFormVisible(false);
+            fetchNotices(page); // 목록 새로고침
+        } catch (error) {
+            console.error('Error submitting notice:', error);
+        }
+    };
 
-  return (
-    <div>
-      <h1>공지사항</h1>
+    // 목록으로 돌아가기 함수
+    const backToList = () => {
+        setSelectedNotice(null);
+    };
 
-      {/* 공지사항 테이블 */}
-      {!selectedNotice && !showForm && (
-        <div>
-          <table>
-            <thead>
-              <tr>
-                <th>No</th>
-                <th>카테고리</th>
-                <th>제목</th>
-                <th>작성자</th>
-                <th>등록일</th>
-                <th>조회수</th>
-              </tr>
-            </thead>
-            <tbody>
-              {notices.map((notice, index) => (
-                <tr key={notice.id || index} onClick={() => loadNoticeDetails(notice.id)}>
-                  <td>{index + 1 + (currentPage - 1) * noticesPerPage}</td>
-                  <td>{notice.category || "일반공지"}</td>
-                  <td>{notice.title}</td>
-                  <td>{notice.author || "관리자"}</td>
-                  <td>{notice.createdAt}</td>
-                  <td>{notice.views}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+    useEffect(() => {
+        fetchNotices(page);
+        checkLoginStatus();
+    }, [page]);
 
-          {/* 페이지네이션 */}
-          <div className="pagination">
-            <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
-              이전
-            </button>
-            <span>
-              {currentPage} / {totalPages}
-            </span>
-            <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}>
-              다음
-            </button>
-          </div>
-          <button onClick={() => setShowForm(true)}>새 공지사항 작성</button>
-        </div>
-      )}
+    if (loading) return <div>Loading...</div>;
+    if (error) return <div>Error fetching notices</div>;
 
-      {/* 공지사항 상세보기 */}
-      {selectedNotice && (
-        <div>
-          <h2>{selectedNotice.title}</h2>
-          <p><strong>작성자:</strong> {selectedNotice.author || "관리자"}</p>
-          <p><strong>작성일:</strong> {selectedNotice.createdAt}</p>
-          <p><strong>조회수:</strong> {selectedNotice.views}</p>
-          <p>{selectedNotice.content}</p>
-          <button onClick={() => setSelectedNotice(null)}>목록으로</button>
-          <button onClick={() => handleDeleteNotice(selectedNotice.id)}>삭제</button>
-        </div>
-      )}
+    return (
+        <NoticeBoardContainer>
+            <Title>공지사항</Title>
 
-      {/* 새 공지사항 작성 폼 */}
-      {showForm && (
-        <div>
-          <h2>새 공지사항 작성</h2>
-          <label>
-            카테고리:
-            <select
-              value={newNotice.category}
-              onChange={(e) => setNewNotice({ ...newNotice, category: e.target.value })}
-            >
-              <option value="01">일반공지</option>
-              <option value="02">수강정보</option>
-              <option value="99">기타</option>
-            </select>
-          </label>
-          <label>
-            제목:
-            <input
-              type="text"
-              value={newNotice.title}
-              onChange={(e) => setNewNotice({ ...newNotice, title: e.target.value })}
-            />
-          </label>
-          <label>
-            내용:
-            <textarea
-              value={newNotice.content}
-              onChange={(e) => setNewNotice({ ...newNotice, content: e.target.value })}
-            />
-          </label>
-          <button onClick={handleCreateNotice}>작성 완료</button>
-          <button onClick={() => setShowForm(false)}>취소</button>
-        </div>
-      )}
-    </div>
-  );
+            {/* 작성 폼 모드 */}
+            {isFormVisible ? (
+                <NoticeForm onSubmit={submitNotice}>
+                    <h3>새 공지사항 작성</h3>
+                    <label>카테고리</label>
+                    <FormSelect 
+                        value={newNotice.categoryId} 
+                        onChange={(e) => setNewNotice({ ...newNotice, categoryId: e.target.value })} 
+                        required
+                    >
+                        <option value="">카테고리 선택</option>
+                        <option value="01">일반공지</option>
+                        <option value="02">수강정보</option>
+                        <option value="99">기타</option>
+                    </FormSelect>
+                    <label>제목</label>
+                    <FormInput 
+                        type="text" 
+                        value={newNotice.title} 
+                        onChange={(e) => setNewNotice({ ...newNotice, title: e.target.value })} 
+                        required 
+                    />
+                    <label>내용</label>
+                    <FormTextarea 
+                        value={newNotice.content} 
+                        onChange={(e) => setNewNotice({ ...newNotice, content: e.target.value })} 
+                        required 
+                    />
+                    <SubmitButton type="submit">작성</SubmitButton>
+                    <CancelButton type="button" onClick={() => setIsFormVisible(false)}>취소</CancelButton>
+                </NoticeForm>
+            ) : (
+                <>
+                    {/* 상세보기 모드 */}
+                    {selectedNotice ? (
+                        <NoticeDetail>
+                            <h3>{selectedNotice.lmsNoticesTitle}</h3>
+                            <p>{selectedNotice.lmsNoticesContent}</p>
+                            <p>작성자: {selectedNotice.user ? selectedNotice.user.userNameKor : '관리자'}</p>
+                            <p>등록일: {new Date(selectedNotice.lmsNoticesWritingDate).toLocaleDateString()}</p>
+                            <p>조회수: {selectedNotice.lmsNoticesViewCount}</p>
+                            <button onClick={backToList}>목록으로 돌아가기</button>
+                            {/* 관리자일 경우 삭제 버튼 표시 */}
+                            {isAdmin && (
+                                <DeleteButton onClick={() => deleteSelectedNotice(selectedNotice.lmsNoticesSeq)}>
+                                    삭제
+                                </DeleteButton>
+                            )}
+                        </NoticeDetail>
+                    ) : (
+                        <>
+                            {/* 공지사항 목록 */}
+                            <NoticeTable>
+                                <TableHead>
+                                    <tr>
+                                        <TableHeader>No</TableHeader>
+                                        <TableHeader>카테고리</TableHeader>
+                                        <TableHeader>제목</TableHeader>
+                                        <TableHeader>작성자</TableHeader>
+                                        <TableHeader>등록일</TableHeader>
+                                        <TableHeader>조회</TableHeader>
+                                    </tr>
+                                </TableHead>
+                                <tbody>
+                                    {notices.map((notice, index) => (
+                                        <tr key={notice.lmsNoticesSeq}>
+                                            <TableData>{index + 1 + (page - 1) * noticesPerPage}</TableData>
+                                            <TableData>{getCategoryName(notice.categoryId)}</TableData>
+                                            <TableData 
+                                                className="notice-title"
+                                                style={{cursor: 'pointer'}}
+                                                onClick={() => loadNoticeDetails(notice.lmsNoticesSeq)} 
+                                            >
+                                                {notice.lmsNoticesTitle}
+                                            </TableData>
+                                            <TableData>{notice.user ? notice.user.userNameKor : '관리자'}</TableData>
+                                            <TableData>{new Date(notice.lmsNoticesWritingDate).toLocaleDateString()}</TableData>
+                                            <TableData>{notice.lmsNoticesViewCount}</TableData>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </NoticeTable>
+
+                            {/* 페이지네이션 */}
+                            <PaginationContainer>
+                                <PaginationButton
+                                    onClick={() => setPage(page - 1)}
+                                    disabled={page === 1}
+                                >
+                                    이전
+                                </PaginationButton>
+                                {Array.from({ length: totalPages }, (_, i) => (
+                                    <PaginationButton
+                                        key={i + 1}
+                                        onClick={() => setPage(i + 1)}
+                                        disabled={i + 1 === page}
+                                    >
+                                        {i + 1}
+                                    </PaginationButton>
+                                ))}
+                                <PaginationButton
+                                    onClick={() => setPage(page + 1)}
+                                    disabled={page === totalPages}
+                                >
+                                    다음
+                                </PaginationButton>
+                            </PaginationContainer>
+
+                            {/* 관리자일 경우에만 "새 공지사항 작성" 버튼을 표시 */}
+                            {isAdmin && (
+                                <CreateNoticeButton onClick={() => setIsFormVisible(true)}>
+                                    새 공지사항 작성
+                                </CreateNoticeButton>
+                            )}
+                        </>
+                    )}
+                </>
+            )}
+        </NoticeBoardContainer>
+    );
 }
 
 export default Notices;

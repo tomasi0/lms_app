@@ -335,7 +335,6 @@ export function QA() {
       {/* 선택한 질문이 있으면 상세 보기 표시 */}
       {selectedQuestion && selectedQuestion !== "new" && (
         <div>
-          <h2>질문 상세보기</h2>
           <h3>{selectedQuestion.lmsQaTitle}</h3>
           <p>
             <strong>작성자:</strong> {selectedQuestion.user?.userNameKor || "알 수 없음"}

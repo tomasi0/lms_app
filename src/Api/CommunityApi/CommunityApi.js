@@ -83,7 +83,10 @@ export async function getAllNotices(page = 0, size = 5) {
 export async function getNoticeById(id) {
   try {
     const response = await api.get(`/api/notices/${id}`);
-    return response.data;
+    const notice = response.data;
+
+    // 특정 공지사항의 lmsNoticesSeq 필드를 반환하거나 전체 공지사항을 반환할 수 있음
+    return notice.lmsNoticesSeq ? notice : null;
   } catch (error) {
     console.error("Error getNoticeById:", error);
     throw error;
