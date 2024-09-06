@@ -1,10 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { getAllNotices, getNoticeById, getCurrentUser, createNotice, deleteNotice } from "../../../Api/CommunityApi/CommunityApi";
+import { Navbar } from "../Navbar";
+import { LeftSidebar, RightSidebar } from "../Sidebar";
 
 // styled-components 스타일 정의
+const H1 = styled.div`
+    text-align: center;
+    display: block;
+    font-size: 2em;
+    margin-block-start: 0.67em;
+    margin-block-end: 0.67em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+    unicode-bidi: isolate;
+`;
+
 const NoticeBoardContainer = styled.div`
     margin: 20px;
+    color: #e0e0e0; /* 텍스트 색상 변경 */
+    background-color: #0f1015; /* 배경색 변경 */
+    padding: 20px;
+    margin-top: 5%;
+    border-radius: 8px;
 `;
 
 const Title = styled.h2`
@@ -14,22 +33,25 @@ const Title = styled.h2`
 const NoticeTable = styled.table`
     width: 100%;
     border-collapse: collapse;
+    background-color: #1c1e24; /* 배경색 짙은 회색 */
 `;
 
 const TableHead = styled.thead`
-    background-color: #f2f2f2;
+    background-color: #23262d; /* 테이블 헤더 배경색 어두운 회색 */
 `;
 
 const TableHeader = styled.th`
-    border: 1px solid #ddd;
+    border: 1px solid #333;
     padding: 8px;
     text-align: center;
+    color: #ffffff; /* 텍스트 색상 흰색 */
 `;
 
 const TableData = styled.td`
-    border: 1px solid #ddd;
+    border: 1px solid #333;
     padding: 8px;
     text-align: center;
+    color: #e0e0e0; /* 텍스트 색상 밝은 회색 */
 `;
 
 const PaginationContainer = styled.div`
@@ -41,28 +63,32 @@ const PaginationContainer = styled.div`
 const PaginationButton = styled.button`
     margin: 0 5px;
     padding: 5px 10px;
-    background-color: ${(props) => (props.disabled ? '#ddd' : '#007bff')};
+    background-color: ${(props) => (props.disabled ? '#555' : '#00adb5')}; /* 비활성화 시 어두운 회색, 활성화 시 파란색 */
     color: white;
     border: none;
     cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
+    border-radius: 4px;
 `;
 
 const CreateNoticeButton = styled.button`
     margin-top: 20px;
     padding: 10px 20px;
-    background-color: #007bff;
+    background-color: #00adb5; 
     color: white;
     border: none;
     cursor: pointer;
     display: block;
     margin-left: auto;
+    border-radius: 4px;
 `;
 
 const NoticeDetail = styled.div`
     margin: 20px 0;
     padding: 20px;
-    border: 1px solid #ddd;
-    background-color: #f9f9f9;
+    border: 1px solid #333; /* 테두리 색상 어둡게 변경 */
+    background-color: #23262d; /* 상세보기 배경색 어두운 회색으로 변경 */
+    color: #e0e0e0; /* 텍스트 색상 밝은 회색으로 변경 */
+    border-radius: 8px;
 `;
 
 const NoticeForm = styled.form`
@@ -74,45 +100,54 @@ const NoticeForm = styled.form`
 
 const FormInput = styled.input`
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid #444; /* 입력 필드 테두리 어둡게 변경 */
+    background-color: #1c1e24; /* 입력 필드 배경색 어두운 회색으로 변경 */
+    color: #e0e0e0; /* 입력 필드 텍스트 색상 밝은 회색으로 변경 */
     border-radius: 4px;
 `;
 
 const FormTextarea = styled.textarea`
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid #444; /* 입력 필드 테두리 어둡게 변경 */
+    background-color: #1c1e24; /* 입력 필드 배경색 어두운 회색으로 변경 */
+    color: #e0e0e0; /* 입력 필드 텍스트 색상 밝은 회색으로 변경 */
     border-radius: 4px;
 `;
 
 const FormSelect = styled.select`
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid #444; /* 선택 필드 테두리 어둡게 변경 */
+    background-color: #1c1e24; /* 선택 필드 배경색 어두운 회색으로 변경 */
+    color: #e0e0e0; /* 선택 필드 텍스트 색상 밝은 회색으로 변경 */
     border-radius: 4px;
 `;
 
 const SubmitButton = styled.button`
     padding: 10px 20px;
-    background-color: #28a745;
+    background-color: #00adb5; 
     color: white;
     border: none;
     cursor: pointer;
+    border-radius: 4px;
 `;
 
 const CancelButton = styled.button`
     padding: 10px 20px;
-    background-color: #dc3545;
+    background-color: #dc3545; /* 취소 버튼 색상 빨간색으로 변경 */
     color: white;
     border: none;
     cursor: pointer;
+    border-radius: 4px;
 `;
 
 const DeleteButton = styled.button`
     padding: 10px 20px;
-    background-color: #dc3545;
+    background-color: #dc3545; /* 삭제 버튼 색상 빨간색으로 변경 */
     color: white;
     border: none;
     cursor: pointer;
     margin-top: 10px;
+    border-radius: 4px;
 `;
 
 export function Notices() {
@@ -227,9 +262,12 @@ export function Notices() {
     if (loading) return <div>Loading...</div>;
     if (error) return <div>Error fetching notices</div>;
 
-    return (
+	return (
+        <>
+        <Navbar />
+        <LeftSidebar />
         <NoticeBoardContainer>
-            <Title>공지사항</Title>
+            <H1>공지사항</H1>
 
             {/* 작성 폼 모드 */}
             {isFormVisible ? (
@@ -350,6 +388,7 @@ export function Notices() {
                 </>
             )}
         </NoticeBoardContainer>
+        </>
     );
 }
 

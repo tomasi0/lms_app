@@ -57,42 +57,14 @@ export async function saveCourseRegistration(courseRegistration) {
   }
 }
 
-// export async function getCourseEnrollCountQueryJPQL() {
-//   try {
-//     const response = await api.get("/course/queryCECJPQL/");
-//     return response.data; // 응답 데이터 반환
-//   } catch (error) {
-//     console.error("Error getCourseEnrollCountQueryJPQL:", error);
-//     throw error;
-//   }
-// }
-
-// export async function getCourseEnrollCountQueryJPQL(lectureName) {
-//   try {
-//     const response = await api.get(`/course/queryCECJPQL/${lectureName}`);
-//     return response.data;
-//   } catch (error) {
-//     console.error("Error getCourseEnrollCountQueryJPQL:", error);
-//     throw error;
-//   }
-// }
-
-// export async function getCourseLectureCountQueryJPQL() {
-//   try {
-//     const response = await api.get("/course/queryCLCJPQL/");
-//     return response.data;
-//   } catch (error) {
-//     console.error("Error getCourseLectureCountQueryJPQL:", error);
-//     throw error;
-//   }
-// }
-
-// export async function getCourseLectureCountQueryJPQL(userName) {
-//   try {
-//     const response = await api.get(`/course/queryCLCJPQL/${userName}`);
-//     return response.data;
-//   } catch (error) {
-//     console.error("Error getCourseLectureCountQueryJPQL:", error);
-//     throw error;
-//   }
-// }
+export async function getCourseRegistraionById(userId, lectureId) {
+  try {
+    const response = await api.get(
+      `/course/registration/${userId}/${lectureId}`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error getCourseRegistraionById:", error);
+    throw error;
+  }
+}

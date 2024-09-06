@@ -2,6 +2,30 @@
 import axios from "axios";
 // import "../../../Styles/styleMypage.css";
 import "../../../Styles/MyPageUserDelete.css";
+import styled, { keyframes } from "styled-components";
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
+const AnimationBox = styled.div`
+    animation: ${fadeIn} 0.6s ease-out;
+`;
+
+const UserDeleteBox = styled.div`
+    padding: 30px 100px 50px 100px;
+    width: 100%;
+    /* height: 500px; */
+    /* background-color: whitesmoke; */
+    background-color: transparent;
+`;
 
 export function MyPageUserDelete() {
     const [userId, setUserId] = useState("");
@@ -90,67 +114,101 @@ export function MyPageUserDelete() {
     };
 
     return (
-        <div className="main-content">
-            <div className="main-top">
-                <div className="userDelete-box">
-                    <h2 className="userDeleteBoxTitle">회원탈퇴</h2>
-                    <div className="userDeleteContainer">
-                        <table className="delete-table">
-                            <thead>
-                                <colgroup>
-                                    <col style={{ width: "20%" }} />
-                                    <col style={{ width: "30%" }} />
-                                    <col style={{ width: "35%" }} />
-                                    <col style={{ width: "15%" }} />
-                                </colgroup>
-                                <tr className="deleteList deleteList1">
-                                    <th>아이디</th>
-                                    <th>훈련기관명</th>
-                                    <th>가입일</th>
-                                    <th>탈퇴 확인</th>
-                                </tr>
-                                <tr className="deleteList deleteList2">
-                                    <td className="deleteUserId">{userId}</td>
-                                    <td className="deleteOffice">
-                                        {userOffice}
-                                    </td>
-                                    <td className="deleteJoinDate">
-                                        {joinDate}
-                                    </td>
-                                    <td className="deleteSelect">
-                                        <input
-                                            className="deleteSelectBox"
-                                            type="checkbox"
-                                        />
-                                    </td>
-                                </tr>
-                            </thead>
-                        </table>
-                        <h2 className="userDeleteReasonTitle">탈퇴사유</h2>
-                        <div className="userDeleteReasonBox">
-                            <textarea
-                                id="userDeleteReason"
-                                rows="3"
-                                placeholder="탈퇴 사유를 입력해주세요"
-                                onChange={handleDeleteReasonChange}
-                                onInput={handleResizeHeight}
-                            ></textarea>
-                        </div>
-                        {textMinLengthAlert && (
-                            <div className="textMinLengthAlert">
-                                *탈퇴 사유를 2자 이상 입력하세요.
-                            </div>
-                        )}
-                        <div
-                            className="userDeleteBtn"
-                            onClick={handleDeleteClick}
+        <AnimationBox>
+            <div className="main-content">
+                <div className="main-top">
+                    <UserDeleteBox>
+                        <h2
+                            className="userDeleteBoxTitle"
+                            style={{ color: "#556b2f" }}
                         >
                             회원탈퇴
+                        </h2>
+                        <div className="userDeleteContainer">
+                            <table className="delete-table">
+                                <thead>
+                                    <colgroup>
+                                        <col style={{ width: "20%" }} />
+                                        <col style={{ width: "30%" }} />
+                                        <col style={{ width: "35%" }} />
+                                        <col style={{ width: "15%" }} />
+                                    </colgroup>
+                                    <tr className="deleteList deleteList1">
+                                        <th style={{ color: "#9da2b9" }}>
+                                            아이디
+                                        </th>
+                                        <th style={{ color: "#9da2b9" }}>
+                                            훈련기관명
+                                        </th>
+                                        <th style={{ color: "#9da2b9" }}>
+                                            가입일
+                                        </th>
+                                        <th style={{ color: "#9da2b9" }}>
+                                            탈퇴 확인
+                                        </th>
+                                    </tr>
+                                    <tr className="deleteList deleteList2">
+                                        <td
+                                            className="deleteUserId"
+                                            style={{ color: "#fff" }}
+                                        >
+                                            {userId}
+                                        </td>
+                                        <td
+                                            className="deleteOffice"
+                                            style={{ color: "#fff" }}
+                                        >
+                                            {userOffice}
+                                        </td>
+                                        <td
+                                            className="deleteJoinDate"
+                                            style={{ color: "#fff" }}
+                                        >
+                                            {joinDate}
+                                        </td>
+                                        <td
+                                            className="deleteSelect"
+                                            style={{ color: "#fff" }}
+                                        >
+                                            <input
+                                                className="deleteSelectBox"
+                                                type="checkbox"
+                                            />
+                                        </td>
+                                    </tr>
+                                </thead>
+                            </table>
+                            <h2
+                                className="userDeleteReasonTitle"
+                                style={{ color: "#fff" }}
+                            >
+                                탈퇴사유
+                            </h2>
+                            <div className="userDeleteReasonBox">
+                                <textarea
+                                    id="userDeleteReason"
+                                    rows="3"
+                                    placeholder="탈퇴 사유를 입력해주세요"
+                                    onChange={handleDeleteReasonChange}
+                                    onInput={handleResizeHeight}
+                                ></textarea>
+                            </div>
+                            {textMinLengthAlert && (
+                                <div className="textMinLengthAlert">
+                                    *탈퇴 사유를 2자 이상 입력하세요.
+                                </div>
+                            )}
+                            <div
+                                className="userDeleteBtn"
+                                onClick={handleDeleteClick}
+                            >
+                                회원탈퇴
+                            </div>
                         </div>
-                    </div>
+                    </UserDeleteBox>
                 </div>
             </div>
-        </div>
+        </AnimationBox>
     );
 }
 

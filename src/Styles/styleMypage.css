@@ -31,13 +31,14 @@ a {
 img {
   border: none;
 }
-textarea{
-	resize: none;
+textarea {
+  resize: none;
 }
-select, option {
+select,
+option {
   font-size: 15px;
 }
-   
+
 .sideMenu {
   width: 100%;
   background-color: skyblue;
@@ -47,7 +48,7 @@ select, option {
 }
 
 .sideBtn {
-  position:sticky;
+  position: sticky;
   font-size: 1.4rem;
   border: 2px solid steelblue;
   margin: 7px 3px;
@@ -58,7 +59,7 @@ select, option {
 
 .sideBtn:hover {
   border: 2px solid white;
-  background-color:skyblue;
+  background-color: skyblue;
 }
 
 .root {
@@ -77,7 +78,7 @@ select, option {
   margin: 0 auto 50px auto;
   font-weight: 700;
   color: white;
-  white-space:nowrap;
+  white-space: nowrap;
 }
 
 .userdataupdateBtnBox {
@@ -85,7 +86,9 @@ select, option {
   justify-content: flex-end;
 }
 
-.userDataUpdateBtn, .userDataUpdateBtn1, .userDataUpdateBtn2 {
+.userDataUpdateBtn,
+.userDataUpdateBtn1,
+.userDataUpdateBtn2 {
   width: 100px;
   height: 40px;
   color: white;
@@ -97,7 +100,8 @@ select, option {
   margin: 10px;
 }
 
-.userDataUpdateBtn, .userDataUpdateBtn2 {
+.userDataUpdateBtn,
+.userDataUpdateBtn2 {
   background-color: dodgerblue;
 }
 
@@ -105,7 +109,7 @@ select, option {
   background-color: crimson;
 }
 
-.userDeleteBtn{
+.userDeleteBtn {
   width: 150px;
   height: 50px;
   background-color: crimson;
@@ -120,24 +124,31 @@ select, option {
   line-height: 250%;
 }
 
-.userDataUpdateBtn:hover, .userDataUpdateBtn2:hover, .adressSearchButton:hover {
+.userDataUpdateBtn:hover,
+.userDataUpdateBtn2:hover,
+.adressSearchButton:hover {
   background-color: lightblue;
   color: dodgerblue;
 }
 
-.userDataUpdateBtn1:hover, .userDeleteBtn:hover {
+.userDataUpdateBtn1:hover,
+.userDeleteBtn:hover {
   background-color: orange;
   color: crimson;
 }
 
-.userInfo-box, .userLecture-box, .userDelete-box {
+.userInfo-box,
+.userLecture-box,
+.userDelete-box {
   padding: 30px 100px 50px 100px;
   width: 100%;
   /* height: 500px; */
   background-color: whitesmoke;
 }
 
-.userInfoBoxTitle, .userLectureBoxTitle, .userDeleteBoxTitle {
+.userInfoBoxTitle,
+.userLectureBoxTitle,
+.userDeleteBoxTitle {
   margin-bottom: 30px;
   font-size: 30px;
   font-family: 500;
@@ -146,8 +157,8 @@ select, option {
 /* 유저회원정보 */
 .userGridContainer {
   display: grid;
-  grid-template-columns:  1.3fr 0.7fr 1fr 1fr 1.3fr 0.7fr 1fr 1fr;
-  background-color: #2196F3;
+  grid-template-columns: 1.3fr 0.7fr 1fr 1fr 1.3fr 0.7fr 1fr 1fr;
+  background-color: #2196f3;
   border: 1px solid #333333;
   border-top: 2px solid #333333;
   border-bottom: 2px solid #333333;
@@ -160,23 +171,26 @@ select, option {
   padding-bottom: 50px;
 }
 
-.userLectureStudyingContainer, .userLectureCancelContainer, .userDeleteContainer, .userLectureCompleteContainer {
+.userLectureStudyingContainer,
+.userLectureCancelContainer,
+.userDeleteContainer,
+.userLectureCompleteContainer {
   width: 100%;
   padding: 20px;
 }
 
-.lectureCancel{
+.lectureCancel {
   font-size: 0.9rem;
 }
 
-.userGridContainer > div{
+.userGridContainer > div {
   display: inline;
   font-size: 20px;
   border: 1px solid #333333;
   height: 50px;
   white-space: nowrap;
   padding-right: 5px;
-  line-height : 50px;
+  line-height: 50px;
 }
 
 .userGridContainer > div > input {
@@ -191,23 +205,42 @@ select, option {
   padding: 0 10px;
 }
 
-.userGrid1, .userGrid5, .userGrid9, .userGrid13,.userGrid17, .userGrid21, .userGrid23 {
+.userGrid1,
+.userGrid5,
+.userGrid9,
+.userGrid13,
+.userGrid17,
+.userGrid21,
+.userGrid23 {
   grid-column: 1 / span 1;
   text-align: right;
 }
-.userGrid2, .userGrid6, .userGrid10, .userGrid14, .userGrid18 {
+.userGrid2,
+.userGrid6,
+.userGrid10,
+.userGrid14,
+.userGrid18 {
   grid-column: span 3;
   text-align: left;
 }
-.userGrid3, .userGrid7, .userGrid11, .userGrid15,.userGrid19 {
+.userGrid3,
+.userGrid7,
+.userGrid11,
+.userGrid15,
+.userGrid19 {
   grid-column: span 1;
   text-align: right;
 }
-.userGrid4, .userGrid8, .userGrid12, .userGrid16,.userGrid20 {
+.userGrid4,
+.userGrid8,
+.userGrid12,
+.userGrid16,
+.userGrid20 {
   grid-column: span 3;
   text-align: left;
 }
-.userGrid22, .userGrid24 {
+.userGrid22,
+.userGrid24 {
   grid-column: span 7;
 }
 
@@ -216,7 +249,7 @@ select, option {
   grid-template-columns: 1fr 3fr 1fr 3fr 1fr 3fr;
 }
 
-.userGrid24  ul {
+.userGrid24 ul {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -232,10 +265,11 @@ select, option {
 }
 
 .userDataCheckBox {
-  scale: 2.0;
+  scale: 2;
 }
 
-.userGrid > div, .adressBox {
+.userGrid > div,
+.adressBox {
   margin-left: 10px;
   color: #6b6bbd;
 }
@@ -247,7 +281,8 @@ select, option {
   align-items: center;
 }
 
-.adressBox, .adressBox2 {
+.adressBox,
+.adressBox2 {
   width: 95% !important;
   height: 90% !important;
   margin: 0 auto !important;
@@ -257,10 +292,10 @@ select, option {
   white-space: nowrap;
   border: 0.5px solid #333333 !important;
   border-radius: 5px !important;
-  line-height :normal !important;
+  line-height: normal !important;
 }
 
-.adressSearchButton{
+.adressSearchButton {
   font-size: 16px;
   text-align: center;
   padding: 6px;
@@ -287,14 +322,17 @@ select, option {
   margin: 50px auto;
 }
 
-.userCompleteLecSearchBarBorder, .userCancelLecSearchBarBorder {
+.userCompleteLecSearchBarBorder,
+.userCancelLecSearchBarBorder {
   width: 70%;
   margin: 0 auto 30px auto;
   border: 12px solid rgb(141, 191, 232);
   border-radius: 20px;
 }
 
-.userGraphSearchBar, .userCompleteLecSearchBar, .userCancelLecSearchBar {
+.userGraphSearchBar,
+.userCompleteLecSearchBar,
+.userCancelLecSearchBar {
   display: grid;
   grid-template-columns: 4fr 1fr;
   height: 50px;
@@ -306,7 +344,9 @@ select, option {
   width: 30% !important;
 }
 
-.userGraphSearchBar > input, .userCompleteLecSearchBar > input, .userCancelLecSearchBar > input {
+.userGraphSearchBar > input,
+.userCompleteLecSearchBar > input,
+.userCancelLecSearchBar > input {
   padding: 0 10px;
 }
 
@@ -318,7 +358,9 @@ select:invalid {
   color: #8c8c8c;
 }
 
-#userGraphSearchBtn, #userCompleteLecSearchBtn, #userCancelLecSearchBtn {
+#userGraphSearchBtn,
+#userCompleteLecSearchBtn,
+#userCancelLecSearchBtn {
   font-weight: 500;
   color: white;
   background-color: dodgerblue;
@@ -326,24 +368,39 @@ select:invalid {
   cursor: pointer;
 }
 
-#userGraphSearchBtn:hover, #userCompleteLecSearchBtn:hover, #userCancelLecSearchBtn:hover {
+#userGraphSearchBtn:hover,
+#userCompleteLecSearchBtn:hover,
+#userCancelLecSearchBtn:hover {
   color: dodgerblue;
   background-color: skyblue;
 }
 
+input::placeholder {
+  color: #8c8c8c;
+}
+input::-webkit-input-placeholder {
+  color: #8c8c8c;
+}
+input::-ms-input-placeholder {
+  color: #8c8c8c;
+}
 
-input::placeholder {color:#8c8c8c;}
-input::-webkit-input-placeholder {color:#8c8c8c;}
-input::-ms-input-placeholder {color:#8c8c8c;}
-
-.userGraphSearchBar > input, .userGraphSearchBar > select, .userGraphSearchBar > div, 
-.userCompleteLecSearchBar > input, .userCompleteLecSearchBar > select, .userCompleteLecSearchBar > div, 
-.userCancelLecSearchBar > input, .userCancelLecSearchBar > select, .userCancelLecSearchBar > div{
+.userGraphSearchBar > input,
+.userGraphSearchBar > select,
+.userGraphSearchBar > div,
+.userCompleteLecSearchBar > input,
+.userCompleteLecSearchBar > select,
+.userCompleteLecSearchBar > div,
+.userCancelLecSearchBar > input,
+.userCancelLecSearchBar > select,
+.userCancelLecSearchBar > div {
   margin: 2px;
   height: 40px;
 }
 
-.userGraphSearchBar > div, .userCompleteLecSearchBar > div, .userCancelLecSearchBar  > div {
+.userGraphSearchBar > div,
+.userCompleteLecSearchBar > div,
+.userCancelLecSearchBar > div {
   background-color: dodgerblue;
   border-radius: 3px;
   text-align: center;
@@ -359,7 +416,7 @@ input::-ms-input-placeholder {color:#8c8c8c;}
 .graphY-axis > li {
   position: relative;
   width: 100%;
-  height: calc(100%/10);
+  height: calc(100% / 10);
   border-top: 1px solid #8c8c8c;
   text-align: left;
 }
@@ -382,21 +439,19 @@ input::-ms-input-placeholder {color:#8c8c8c;}
   font-size: 20px;
 }
 
-
 .graphX-axis > li > div {
   width: 98px;
 }
 
-.graphBar{
+.graphBar {
   display: flex;
   position: absolute;
   justify-content: space-around;
   align-items: flex-end;
-  width:100%;
+  width: 100%;
   height: 300px;
   text-align: center;
   z-index: 3;
-  
 }
 
 .graphBar > li > div {
@@ -404,37 +459,37 @@ input::-ms-input-placeholder {color:#8c8c8c;}
   width: 50px;
 }
 
-#classGraphBar1{
+#classGraphBar1 {
   height: 0px;
   background-color: orangered;
 }
 
-#classGraphBar2{
+#classGraphBar2 {
   height: 0px;
   background-color: orange;
 }
 
-#classGraphBar3{
+#classGraphBar3 {
   height: 0px;
   background-color: gold;
 }
 
-#classGraphBar4{
+#classGraphBar4 {
   height: 0px;
   background-color: yellowgreen;
 }
 
-#classGraphBar5{
+#classGraphBar5 {
   height: 0px;
   background-color: dodgerblue;
 }
 
-#classGraphBar6{
+#classGraphBar6 {
   height: 0px;
   background-color: blue;
 }
 
-#classGraphBar7{
+#classGraphBar7 {
   height: 0px;
   background-color: blueviolet;
 }
@@ -489,15 +544,19 @@ input::-ms-input-placeholder {color:#8c8c8c;}
   cursor: pointer;
 }
 
-.lecturemenu:hover{
+.lecturemenu:hover {
   border: 2px solid royalblue;
 }
 
-.studying-body, .cancel-body, .complete-body {
+.studying-body,
+.cancel-body,
+.complete-body {
   position: relative;
 }
 
-.studyingList, .cancelList, .completelList {
+.studyingList,
+.cancelList,
+.completelList {
   width: 100%;
   border-collapse: collapse;
   overflow: hidden;
@@ -505,14 +564,16 @@ input::-ms-input-placeholder {color:#8c8c8c;}
   border-bottom: 2px solid #333333;
 }
 
-.lectureCancelBtn, .reviewBtn, .classRoomBtn {
+.lectureCancelBtn,
+.reviewBtn,
+.classRoomBtn {
   cursor: pointer;
   padding: 3px;
   width: 80%;
   border-radius: 10px;
   margin: auto;
   color: #ffffff;
-  white-space:nowrap;
+  white-space: nowrap;
 }
 
 .lectureCancelBtn {
@@ -525,12 +586,14 @@ input::-ms-input-placeholder {color:#8c8c8c;}
   color: crimson;
 }
 
-.reviewBtn, .classRoomBtn {
+.reviewBtn,
+.classRoomBtn {
   background-color: dodgerblue;
   border: 3px solid dodgerblue;
 }
 
-.reviewBtn:hover, .classRoomBtn:hover {
+.reviewBtn:hover,
+.classRoomBtn:hover {
   background-color: skyblue;
   color: dodgerblue;
 }
@@ -546,7 +609,10 @@ input::-ms-input-placeholder {color:#8c8c8c;}
   border: 1px solid #333333;
 }
 
-.studying-table, .cancel-table, .delete-table, .complete-table {
+.studying-table,
+.cancel-table,
+.delete-table,
+.complete-table {
   width: 100%;
   border-collapse: collapse;
   overflow: hidden;
@@ -562,7 +628,9 @@ input::-ms-input-placeholder {color:#8c8c8c;}
   border: 3px solid #333333;
 }
 
-.studying-table td, .cancel-table td, .delete-table td {
+.studying-table td,
+.cancel-table td,
+.delete-table td {
   text-align: center;
 }
 
@@ -597,10 +665,10 @@ input::-ms-input-placeholder {color:#8c8c8c;}
 }
 
 .deleteSelectBox {
-  scale: 2.0;
+  scale: 2;
 }
 
-.userDeleteReasonBox{
+.userDeleteReasonBox {
   width: 100%;
   border-top: 2px solid #333333;
   border-bottom: 2px solid #333333;
@@ -614,10 +682,12 @@ input::-ms-input-placeholder {color:#8c8c8c;}
   border: none;
   padding: 10px;
   font-size: 1.5rem;
-  overflow: hidden
+  overflow: hidden;
 }
 
-.lecTableList, .lecCancelList, .lecCompleteList {
+.lecTableList,
+.lecCancelList,
+.lecCompleteList {
   height: 50px;
   border-top: 2px solid #333333;
   border-bottom: 1px solid #333333;
@@ -704,8 +774,8 @@ input::-ms-input-placeholder {color:#8c8c8c;}
   border-radius: 15px;
   cursor: pointer;
 } */
-  /* gnb */
-  /* .gnb {
+/* gnb */
+/* .gnb {
     float: right;
     width: 70%;
     height: 100%;
@@ -730,9 +800,9 @@ input::-ms-input-placeholder {color:#8c8c8c;}
   .gnb li .mainnav:hover {
     color: #333333;
   } */
-  
-  /* footer */
-  /* .footer {
+
+/* footer */
+/* .footer {
     width: 100%;
     height: 100px;
     background-color: #333333;
@@ -774,4 +844,3 @@ input::-ms-input-placeholder {color:#8c8c8c;}
     margin: 0 auto;
     border: 1px solid black;
   } */
-  

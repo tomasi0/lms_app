@@ -1,46 +1,101 @@
-import { useState, useEffect, useContext } from "react";
-import {
-  getGenre,
-  getAllLectures,
-  getRecommendedLectures,
-  getFreeLectures,
-  getPaidLectures,
-  getNewLectures,
-  setGenreListOfMovie,
-  IMG_PATH,
-} from "../api";
-import styled from "styled-components";
+import { useState, useEffect } from "react";
+import styled, { keyframes } from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { LMSContext, LMSWrapper } from "../LMSWrapper";
-import { getCategory } from "../../../Api/CategoryApi/CategoryApi";
 import {
   getAllLecture,
   getCategoryLecture,
 } from "../../../Api/LectureApi/LectureApi";
+import { Navbar } from "../Navbar";
+import { LeftSidebar } from "../Sidebar";
+import { SearchIcon } from "../../../Utils/svg";
 
-const Container = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 `;
 
-const SearchBox = styled.div`
-  margin: 0 auto;
+const RightSideContainer = styled.div`
+  box-sizing: border-box;
+  width: 240px;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 988;
+`;
+
+const LectureListBox = styled.div`
+  width: 100%;
+  padding: 20px;
+  animation: ${fadeIn} 0.6s ease-out;
+`;
+
+const LectureHeadText = styled.div`
+  width: 100%;
+  height: 300px;
+  background-image: url("/image/lectureHeader.png");
+  background-size: cover;
+  background-position: center;
+  border-radius: 15px;
+`;
+
+const ContainerBox = styled.div`
+  box-sizing: border-box;
+  padding: 176px 240px 0 240px;
+  transition: all 0.3s;
+  min-height: 200vh;
+  animation: ${fadeIn} 0.6s ease-out;
+`;
+
+const Container = styled.div`
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 25%);
+  justify-items: center;
+  align-items: center;
+  gap: 40px 10px;
+`;
+
+const SearchViewBox = styled.div`
+  display: flex;
+  width: 100%;
+  padding: 10px;
+`;
+
+const SearchText = styled.p`
+  color: #fff;
+  font-size: 18px;
+  margin-left: 10px;
+  cursor: pointer;
+  padding-left: 50px;
 `;
 
 const Input = styled.input`
   width: 500px;
-  margin-right: 5px;
+  height: 32px;
+  font-size: 15px;
+  border: 0;
+  border-radius: 15px;
+  outline: none;
+  padding-left: 10px;
+  background-color: rgb(233, 233, 233);
 `;
 
 const LectureContainer = styled.div`
   aspect-ratio: 1 / 0.7;
   border-radius: 8px;
   position: relative;
-  background-color: #000000;
   overflow: hidden;
   box-shadow: 0 0 20px #eee;
   cursor: pointer;
+  width: 90%;
+  animation: ${fadeIn} 0.6s ease-out;
 
   &:hover img {
     filter: grayscale(1) brightness(0.4);
@@ -70,13 +125,6 @@ const LectureImg = styled.img`
   width: 100%;
   height: 100%;
   overflow: hidden;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: 0.5s ease-in-out;
-  }
 `;
 
 const Content = styled.div`
@@ -85,25 +133,23 @@ const Content = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
-  color: white;
   opacity: 0;
   transition: 0.5s ease-in-out;
   width: 75%;
+  background-color: transparent;
 `;
 
 const Tab = styled.div`
-  display: flex;
+  display: block;
   margin: 10px 0;
+  padding: 250px 0 0 40px;
 `;
 
 const Button = styled.button`
   width: 150px;
   height: 40px;
-  //background-color: dodgerblue;
-  background-color: ${(props) =>
-    props.className === "selected" ? "green" : "dodgerblue"};
   border: none;
-  color: white;
+  color: #9da2b9;
   padding: 5px 15px;
   text-align: center;
   text-decoration: none;
@@ -113,37 +159,57 @@ const Button = styled.button`
   cursor: pointer;
   border-radius: 4px;
   transition: background-color 0.3s ease;
-  // 마위스 위에
-  &:hover {
-    background-color: blue;
+`;
+
+const fadeInSearch = keyframes`
+  from {
+    opacity: 0;
+    transform: scale(0.9);
   }
-  // 마우스 클릭시
-  &:active {
-    background-color: darkblue;
-  }
-  // 클래스 active 이면 this.active
-  &.active {
-    background-color: green;
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 `;
 
+const fadeOutSearch = keyframes`
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+`;
+
+const SearchBox = styled.div`
+  animation: ${(props) => (props.isVisible ? fadeInSearch : fadeOutSearch)} 0.3s
+    ease-in-out;
+  opacity: ${(props) => (props.isVisible ? 1 : 0)};
+  transform: scale(${(props) => (props.isVisible ? 1 : 0.9)});
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
+  cursor: pointer;
+  text-align: center;
+`;
+
 export function LectureList() {
-  // const [data, setData] = useState(null);
   const [LectureData, setLectureData] = useState([]);
-  // const [category, setCategory] = useState(0); => 부모, 즉 LMSWrapper 로 이동시킴
   const [keyword, setKeyword] = useState("");
-
-  // const { category, setCategory } = useContext(LMSContext); // 부모, 즉 LMSWrapper 에서 생성한 LMSContext 에서 꺼내서 사용
   const [inputValue, setInputValue] = useState("");
+  const [searchView, setSearchView] = useState(false);
 
-  // useNavigage 후크는 url 주소를 매개변수로 갖는 페이지 변경 함수를 리턴함!
   const navigate = useNavigate();
 
   useEffect(() => {
     lectureList();
   }, [inputValue]);
 
-  // 강의 데이터 & 검색
   async function lectureList() {
     if (!inputValue) {
       const lectureAxios = await getAllLecture();
@@ -154,7 +220,6 @@ export function LectureList() {
     }
   }
 
-  // 카테고리 검색
   const categories = [
     { category: "전체" },
     { category: "추천" },
@@ -192,52 +257,78 @@ export function LectureList() {
     setLectureData(categoryList);
   }
 
+  async function handleSearchView() {
+    setSearchView((prevSearchView) => !prevSearchView);
+  }
+
   return (
     <>
-      <Tab>
-        {
-          // {} 는 return 들어가야 되고, 아니면 ()
-          categories.map((c) => (
-            <Button onClick={() => getCategory(c.category)}>
-              {c.category}
-            </Button>
-          ))
-        }
-      </Tab>
-      <SearchBox>
-        <Input
-          placeholder="검색어를 입력해주세요"
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-        />
-        <button onClick={() => lectureList(inputValue)}>Search</button>
-      </SearchBox>
-      <Container>
-        {LectureData &&
-          LectureData.map((Lecture) => (
-            <LectureContainer
-              key={Lecture.lectureId}
-              onClick={() => {
-                navigate(`/lectures/${Lecture.lectureId}`);
-              }}
-            >
-              <LectureImg src={Lecture.imagePath}></LectureImg>
-              {/* <Text className="content">{Lecture.lectureName}</Text>
-              <Text className="content">
-                장르 : {Lecture.category.categoryName}
-              </Text> */}
-              <Content className="lectureContent">
-                <h2 style={{ marginBottom: "20px" }}>{Lecture.lectureName}</h2>
-                <p style={{ marginTop: "40px" }}>
-                  {Lecture.category.categoryName}
-                </p>
-              </Content>
-              {/* <Text className="content">
-                소개글 : {Lecture.educationOverview}
-              </Text> */}
-            </LectureContainer>
-          ))}
-      </Container>
+      <Navbar />
+      <LeftSidebar />
+      <ContainerBox>
+        <RightSideContainer>
+          <Tab>
+            {categories.map((c) => (
+              <Button key={c.category} onClick={() => getCategory(c.category)}>
+                {c.category}강의
+              </Button>
+            ))}
+          </Tab>
+        </RightSideContainer>
+        <LectureHeadText />
+        <LectureListBox>
+          <SearchViewBox>
+            <SearchText onClick={handleSearchView}>
+              <SearchIcon />
+            </SearchText>
+            {searchView && (
+              <SearchBox isVisible={searchView}>
+                <Input
+                  placeholder="검색어를 입력해주세요"
+                  value={inputValue}
+                  onChange={(e) => setInputValue(e.target.value)}
+                />
+              </SearchBox>
+            )}
+          </SearchViewBox>
+
+          <Container>
+            {LectureData &&
+              LectureData.map((Lecture) => (
+                <LectureContainer
+                  key={Lecture.lectureId}
+                  onClick={() => {
+                    navigate(`/lectures/${Lecture.lectureId}`);
+                  }}
+                >
+                  <LectureImg src={Lecture.imagePath} />
+                  <Content className="lectureContent">
+                    <h2
+                      style={{
+                        marginBottom: "20px",
+                        fontSize: "18px",
+                        backgroundColor: "transparent",
+                        color: "#fff",
+                      }}
+                    >
+                      {Lecture.lectureName}
+                    </h2>
+                    <p
+                      style={{
+                        marginTop: "40px",
+                        fontSize: "14px",
+                        backgroundColor: "transparent",
+                        color: "#9da2b9",
+                      }}
+                    >
+                      {Lecture.category.categoryName}
+                    </p>
+                  </Content>
+                </LectureContainer>
+              ))}
+          </Container>
+        </LectureListBox>
+      </ContainerBox>
     </>
   );
 }

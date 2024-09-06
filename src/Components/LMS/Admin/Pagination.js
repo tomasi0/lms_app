@@ -1,4 +1,4 @@
-﻿import React from 'react';
+﻿import React from "react";
 
 const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   const handlePageChange = (page) => {
@@ -17,10 +17,12 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
         이전
       </button>
       <div className="number-button-wrapper">
-        {[...Array(totalPages).keys()].map(page => (
+        {[...Array(totalPages).keys()].map((page) => (
           <button
             key={page + 1}
-            className={`number-button ${currentPage === page + 1 ? 'selected' : ''}`}
+            className={`number-button ${
+              currentPage === page + 1 ? "selected" : ""
+            }`}
             onClick={() => handlePageChange(page + 1)}
           >
             {page + 1}

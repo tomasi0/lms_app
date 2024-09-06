@@ -15,20 +15,24 @@
   min-height: 100vh;
 }
 
-.userInfo-box, .userLecture-box, .userDelete-box {
+.userInfo-box,
+.userLecture-box,
+.userDelete-box {
   padding: 30px 100px 50px 100px;
   width: 100%;
   /* height: 500px; */
-  background-color: whitesmoke;
+  /* background-color: whitesmoke; */
 }
 
-.userInfoBoxTitle, .userLectureBoxTitle, .userDeleteBoxTitle {
+.userInfoBoxTitle,
+.userLectureBoxTitle,
+.userDeleteBoxTitle {
   margin-bottom: 30px;
   font-size: 30px;
   font-family: 500;
 }
 
-.userDeleteBtn{
+.userDeleteBtn {
   width: 150px;
   height: 50px;
   background-color: crimson;
@@ -43,30 +47,40 @@
   line-height: 250%;
 }
 
-.userDataUpdateBtn:hover, .userDataUpdateBtn2:hover, .adressSearchButton:hover {
+.userDataUpdateBtn:hover,
+.userDataUpdateBtn2:hover,
+.adressSearchButton:hover {
   background-color: lightblue;
   color: dodgerblue;
 }
 
-.userDataUpdateBtn1:hover, .userDeleteBtn:hover {
+.userDataUpdateBtn1:hover,
+.userDeleteBtn:hover {
   background-color: orange;
   color: crimson;
 }
 
-.userInfo-box, .userLecture-box, .userDelete-box {
+.userInfo-box,
+.userLecture-box,
+.userDelete-box {
   padding: 30px 100px 50px 100px;
   width: 100%;
   /* height: 500px; */
-  background-color: whitesmoke;
+  /* background-color: whitesmoke; */
 }
 
-.userInfoBoxTitle, .userLectureBoxTitle, .userDeleteBoxTitle {
+.userInfoBoxTitle,
+.userLectureBoxTitle,
+.userDeleteBoxTitle {
   margin-bottom: 30px;
   font-size: 30px;
   font-family: 500;
 }
 
-.userLectureStudyingContainer, .userLectureCancelContainer, .userDeleteContainer, .userLectureCompleteContainer {
+.userLectureStudyingContainer,
+.userLectureCancelContainer,
+.userDeleteContainer,
+.userLectureCompleteContainer {
   width: 100%;
   padding: 20px;
 }
@@ -82,7 +96,10 @@
   border: 1px solid #333333;
 }
 
-.studying-table, .cancel-table, .delete-table, .complete-table {
+.studying-table,
+.cancel-table,
+.delete-table,
+.complete-table {
   width: 100%;
   border-collapse: collapse;
   overflow: hidden;
@@ -98,7 +115,9 @@
   border: 3px solid #333333;
 }
 
-.studying-table td, .cancel-table td, .delete-table td {
+.studying-table td,
+.cancel-table td,
+.delete-table td {
   text-align: center;
 }
 
@@ -126,10 +145,10 @@
 }
 
 .deleteSelectBox {
-  scale: 2.0;
+  scale: 2;
 }
 
-.userDeleteReasonBox{
+.userDeleteReasonBox {
   width: 100%;
   border-top: 2px solid #333333;
   border-bottom: 2px solid #333333;
@@ -143,5 +162,5 @@
   border: none;
   padding: 10px;
   font-size: 1.5rem;
-  overflow: hidden
+  overflow: hidden;
 }

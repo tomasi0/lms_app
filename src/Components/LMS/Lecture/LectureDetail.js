@@ -1,33 +1,163 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getLecture } from "../../../Api/LectureApi/LectureApi";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import {
   getContentsByLectureId,
   getReviewByLectureId,
 } from "../../../Api/LeaningApi/LeaningApi";
 import { getTeacherByLectureId } from "../../../Api/TeacherApi/TeacherApi";
 import { getCurrentUser } from "../../../Api/UserApi/UserApi";
-import { saveCourseRegistration } from "../../../Api/CourseApi/CourseApi";
+import {
+  getAllRegistration,
+  getCourseRegistraionById,
+  saveCourseRegistration,
+} from "../../../Api/CourseApi/CourseApi";
+import { Navbar } from "../Navbar";
+import { LeftSidebar } from "../Sidebar";
+import { CartLectureIcon } from "../../../Utils/svg";
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
+const LectureHeaderImg = styled.div`
+  padding: 176px 50px 0 240px;
+  width: 100%;
+  height: 350px;
+  background-image: url("/image/LectureDetail.png");
+  background-size: cover;
+  background-position: center;
+  border-radius: 15px;
+`;
 
 const Container = styled.div`
-  width: 100%;
+  box-sizing: border-box;
+  padding: 30px 50px 0 240px;
+  transition: all 0.3s;
   display: grid;
-  grid-template-columns: 20% 80%;
+  grid-template-columns: 70% 30%;
+  animation: gqZZDf 0.6s ease-out;
+  width: 100%;
 `;
 
-const SideMenu = styled.div`
+const LectureContainer = styled.div`
   width: 100%;
-  border: 1px solid black;
-`;
-
-const Test = styled.div`
-  width: 100%;
-  border: 1px solid yellow;
+  padding: 30px;
 `;
 
 const LectureImg = styled.img`
-  width: 50%;
+  width: 100%;
+  border-radius: 12px;
+`;
+
+const LectureSideMenu = styled.div``;
+
+const LectureName = styled.p`
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  line-height: 1.4;
+  color: #ffce48;
+  background-color: transparent;
+`;
+
+const LectureOption = styled.div`
+  background-color: #1c1f27;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  width: 100%;
+  padding: 20px;
+  position: relative;
+`;
+
+const LectureContentTitle = styled.p`
+  font-size: 24px;
+  font-weight: 600;
+  margin: 20px 0;
+  line-height: 1.4;
+  color: #ffce48;
+  background-color: transparent;
+  border-bottom: 1px outset #fff;
+`;
+const LectureContentText = styled.p`
+  font-size: 15px;
+  color: #fff;
+  background-color: transparent;
+  line-height: 2;
+`;
+
+const BtnBox = styled.div`
+  width: 36px;
+  height: 36px;
+  background-color: #1c1f27;
+  border: 0;
+  margin-right: 4px;
+  color: #fff;
+  border-radius: 4px;
+  padding: 5px;
+  cursor: pointer;
+  position: absolute; /* 절대 위치 설정 */
+  bottom: 10px; /* 부모 div의 맨 아래에서 10px 위에 위치 */
+  right: 10px; /* 부모 div의 오른쪽에서 10px 왼쪽에 위치 */
+  transition: background-color 0.3s, box-shadow 0.3s;
+
+  &:hover {
+    background-color: #3a3f49;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+`;
+
+const LectureAddBtn = styled.button`
+  width: 100%;
+  height: 60px;
+  background-color: #87ceeb;
+  font-size: 16px;
+  cursor: pointer;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 63px;
+  letter-spacing: normal;
+  color: #333;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  font-weight: 700;
+`;
+
+const Table = styled.table`
+  width: 100%;
+`;
+
+const TableHead = styled.thead`
+  color: white;
+`;
+
+const TableRow = styled.tr`
+  border-bottom: 1px solid #ddd;
+`;
+
+const TableHeader = styled.th`
+  padding: 12px;
+  background-color: #556b2f;
+  text-align: center;
+`;
+
+const TableData = styled.td`
+  padding: 12px;
+  color: #fff;
+`;
+
+const NoReviews = styled.p`
+  text-align: center;
+  font-size: 18px;
+  color: #666;
 `;
 
 export function LectureDetail() {
@@ -37,13 +167,10 @@ export function LectureDetail() {
   const [teacher, setTeacher] = useState([]);
   const [review, setReview] = useState([]);
   const [userId, setUserId] = useState("");
+  const [registration, setRegistration] = useState([]);
+  const [course, setCourse] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    Axios();
-  }, [lectureId]);
-
-  // 로그인한 userId 가져오기
   useEffect(() => {
     async function getUserId() {
       try {
@@ -55,6 +182,13 @@ export function LectureDetail() {
     }
     getUserId();
   }, []);
+
+  // userId가 설정된 후에 Axios 호출
+  useEffect(() => {
+    if (userId) {
+      Axios();
+    }
+  }, [userId]);
 
   // 수강신청
   async function courseAdd() {
@@ -73,6 +207,7 @@ export function LectureDetail() {
     try {
       const courseAxios = await saveCourseRegistration(courseRegistration);
       alert("수강신청 되었습니다");
+      window.location.href = window.location.href;
     } catch (error) {
       console.log("Course Error", error);
     }
@@ -104,25 +239,6 @@ export function LectureDetail() {
       } catch (error) {
         console.log("Session Error", error);
       }
-    }
-  }
-
-  // 장바구니 삭제
-  async function cartRemove() {
-    let userId;
-    let cartList;
-
-    try {
-      const SessionData = await getCurrentUser();
-      userId = SessionData.userId;
-      cartList = JSON.parse(localStorage.getItem(userId));
-
-      if (cartList) {
-        cartList = cartList.filter((item) => item.lectureId !== lectureId);
-        localStorage.setItem(userId, JSON.stringify(cartList));
-      }
-    } catch (error) {
-      console.log("Session Error", error);
     }
   }
 
@@ -158,6 +274,19 @@ export function LectureDetail() {
     } catch (error) {
       console.log("Review Error", error);
     }
+
+    try {
+      const registrationData = await getCourseRegistraionById(
+        userId,
+        lectureId
+      );
+      setRegistration(registrationData[0]);
+      if (registrationData.length > 0 && registrationData[0]) {
+        setCourse(true);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async function CourseMove() {
@@ -165,52 +294,97 @@ export function LectureDetail() {
   }
 
   return (
-    <Container>
-      <SideMenu></SideMenu>
-      <Test>
-        <LectureImg src={lecture.imagePath}></LectureImg>
-        <p>*Lecture Data*</p>
-        <p>Lecture ID: {lectureId}</p>
-        <p>Lecture Title: {lecture.lectureName}</p>
-        <p>Lecture Description: {lecture.learningObject}</p>
-        <p>　</p>
-        <p>*Content Data*</p>
-        {content.map((data, index) => (
-          <p key={index}>
-            {index}.{data.learningContents}
-          </p>
-        ))}
-        <p>　</p>
-        <p>*Teacher Data*</p>
-        {teacher.map((data, index) => (
-          <p key={index}>{data.teacherResume}</p>
-        ))}
-        <p>　</p>
-        <p>*Review Data*</p>
-        {review && review.length > 0 ? (
-          review.map((data, index) => (
-            <div key={index}>
-              <p>{data.course_registration.user.userNameKor}</p>
-              <p>{data.learningReviewTitle}</p>
-              <p>{data.learningReviewContent}</p>
-            </div>
-          ))
-        ) : (
-          <p>리뷰가 없습니다.</p>
-        )}
-        <p>　</p>
-        <p>*CartAdd*</p>
-        <button onClick={cartAdd}>장바구니</button>
-        <p>　</p>
-        <p>*CartRemove*</p>
-        <button onClick={cartRemove}>삭제</button>
-        <p>　</p>
-        <p>*Course Add*</p>
-        <button onClick={courseAdd}>수강하기</button>
-        <p>　</p>
-        <p>*Course View*</p>
-        <button onClick={CourseMove}>강의보기</button>
-      </Test>
-    </Container>
+    <>
+      <Navbar />
+      <LeftSidebar />
+      <LectureHeaderImg></LectureHeaderImg>
+      <Container>
+        <LectureContainer>
+          <LectureContentTitle>강의 목표</LectureContentTitle>
+          <LectureContentText>{lecture.learningObjectives}</LectureContentText>
+          <LectureContentTitle>강의 목차</LectureContentTitle>
+          {content.map((data, index) => (
+            <LectureContentText key={index}>
+              {index + 1}. {data.learningContents}
+            </LectureContentText>
+          ))}
+          <LectureContentTitle>강사</LectureContentTitle>
+          {teacher.map((data, index) => (
+            <LectureContentText key={index}>
+              {data.teacherResume}
+            </LectureContentText>
+          ))}
+          <LectureContentTitle>
+            리뷰
+            <p
+              style={{
+                color: "#fff",
+                float: "right",
+                fontSize: "14px",
+                paddingTop: "10px",
+              }}
+            >
+              {review.length}건
+            </p>
+          </LectureContentTitle>
+
+          {review && review.length > 0 ? (
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableHeader>작성자</TableHeader>
+                  <TableHeader>제목</TableHeader>
+                  <TableHeader>내용</TableHeader>
+                </TableRow>
+              </TableHead>
+              <tbody>
+                {review.map((data, index) => (
+                  <TableRow key={index}>
+                    <TableData>
+                      {data.course_registration.user.userNameKor}
+                    </TableData>
+                    <TableData>{data.learningReviewTitle}</TableData>
+                    <TableData>{data.learningReviewContent}</TableData>
+                  </TableRow>
+                ))}
+              </tbody>
+            </Table>
+          ) : (
+            <NoReviews>리뷰가 없습니다.</NoReviews>
+          )}
+        </LectureContainer>
+        <LectureSideMenu>
+          <LectureImg src={lecture.imagePath} alt="Lecture" />
+
+          <LectureOption>
+            <LectureName>{lecture.lectureName}</LectureName>
+            <LectureContentText>
+              가격 :{" "}
+              {lecture.educationPrice === 0
+                ? "무료"
+                : `${lecture.educationPrice}원`}
+            </LectureContentText>
+            <LectureContentText>
+              학습기간 : {lecture.educationPeriodStartDate} ~{" "}
+              {lecture.educationPeriodEndDate}
+              <LectureContentText>
+                교육시간 : {lecture.educationHours}시간
+              </LectureContentText>
+              <LectureContentText>
+                {/* 장르 : {lecture.category.categoryName} */}
+              </LectureContentText>
+              <BtnBox onClick={cartAdd}>
+                <CartLectureIcon />
+              </BtnBox>
+            </LectureContentText>
+          </LectureOption>
+          {course ? (
+            <LectureAddBtn onClick={CourseMove}>☞ 강의보기</LectureAddBtn>
+          ) : (
+            <LectureAddBtn onClick={courseAdd}>수강신청</LectureAddBtn>
+          )}
+        </LectureSideMenu>
+      </Container>
+    </>
   );
 }

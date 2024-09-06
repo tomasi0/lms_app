@@ -65,7 +65,7 @@ export function LoginMain() {
 
     const handleConnect = () => {
         // window.location.href = "main.html";
-        window.location.href = "home";
+        window.location.href = "index";
     };
 
     return (

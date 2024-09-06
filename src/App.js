@@ -35,85 +35,88 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     box-sizing: border-box;
     font-family: GmarketSansMedium;
+    background-color: #0f1015;
   }
+  
 `;
 
 function App() {
-    // <Gallery />
-    // <CounterState />
-    // <ScoreWrapper />
-    // <AvatarWrapper />
-    // <ListWrapper />
-    // <Test1 />
-    // <Test2 />
-    // <ReactRouter />
-    // <BasicRouter />
-    // <NinjasAPI />
-    // <GlobalStyle />
-    // <Home />
-    // <ReactContext />
-    // <MovieShop />
-    // <ResponsivePage />
-    // <ReactRef />
-    // <TopDownAction />
-    // <LMS />
+  // <Gallery />
+  // <CounterState />
+  // <ScoreWrapper />
+  // <AvatarWrapper />
+  // <ListWrapper />
+  // <Test1 />
+  // <Test2 />
+  // <ReactRouter />
+  // <BasicRouter />
+  // <NinjasAPI />
+  // <GlobalStyle />
+  // <Home />
+  // <ReactContext />
+  // <MovieShop />
+  // <ResponsivePage />
+  // <ReactRef />
+  // <TopDownAction />
+  // <LMS />
 
-    return (
-        <>
-            <LMS />
-        </>
-    );
+  return (
+    <>
+      <GlobalStyle />
+      <LMS />
+    </>
+  );
 
-    // 순수 자바스크립트 영역
-    // const name = getUserName();
+  // 순수 자바스크립트 영역
+  // const name = getUserName();
 
-    // // 빈 테그로 사용 가능
-    // return (
-    // <>
-    //   { name != null ? (
-    //   <>
-    //     <TopMenu></TopMenu>
-    //     <div className="name">{name}</div>
-    //     <SideMenu style={{color: "white", margin: "10px"}}></SideMenu>
-    //     <Content></Content>
-    //     <footer></footer>
-    //   </> // 반드시 부모를 가져야 함
-    //   ) : (
-    //       <p>Name is not found!!</p>
-    //   )}
-    // </>
-    // );
+  // // 빈 테그로 사용 가능
+  // return (
+  // <>
+  //   { name != null ? (
+  //   <>
+  //     <TopMenu></TopMenu>
+  //     <div className="name">{name}</div>
+  //     <SideMenu style={{color: "white", margin: "10px"}}></SideMenu>
+  //     <Content></Content>
+  //     <footer></footer>
+  //   </> // 반드시 부모를 가져야 함
+  //   ) : (
+  //       <p>Name is not found!!</p>
+  //   )}
+  // </>
+  // );
 
-    // return 뒤는 JSX 영역
-    // return 뒤에 시작 코드가 있어야 함
-    // return <div>
-    //   <TopMenu></TopMenu>
-    //   <SideMenu></SideMenu>
-    //   <Content></Content>
-    //   <footer></footer>
-    // </div>;
+  // return 뒤는 JSX 영역
+  // return 뒤에 시작 코드가 있어야 함
+  // return <div>
+  //   <TopMenu></TopMenu>
+  //   <SideMenu></SideMenu>
+  //   <Content></Content>
+  //   <footer></footer>
+  // </div>;
 
-    // return <div>Hello React World!</div>;
+  // return <div>Hello React World!</div>;
 
-    // return (
-    // <div className="App">
-    //   <header className="App-header">
-    //     <img src={logo} className="App-logo" alt="logo" />
-    //     <p>
-    //       Edit <code>src/App.js</code> and save to reload.
-    //     </p>
-    //     <a
-    //       className="App-link"
-    //       href="https://reactjs.org"
-    //       target="_blank"
-    //       rel="noopener noreferrer"
-    //     >
-    //       Learn React
-    //     </a>
-    //   </header>
-    // </div>
+  // return (
+  // <div className="App">
+  //   <header className="App-header">
+  //     <img src={logo} className="App-logo" alt="logo" />
+  //     <p>
+  //       Edit <code>src/App.js</code> and save to reload.
+  //     </p>
+  //     <a
+  //       className="App-link"
+  //       href="https://reactjs.org"
+  //       target="_blank"
+  //       rel="noopener noreferrer"
+  //     >
+  //       Learn React
+  //     </a>
+  //   </header>
+  // </div>
 
-    // );
+  // );
 }
 
 // function getUserName() {}
