@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+
 import { Navbar } from "./Navbar";
 import { Home } from "./Home/Home";
 import { Index } from "./Home/Index";
@@ -23,6 +24,8 @@ import { CommunitySidebar } from "./Community/CommunitySidebar";
 import { LectureDetail } from "./Lecture/LectureDetail";
 import { UnityProject } from "../../Components/Unity/UnityProject";
 import { RightSidebar } from "./Sidebar";
+
+import { Chatroom } from "./Chatroom/Chatroom";
 
 const Container = styled.div`
     display: flex;
@@ -100,6 +103,10 @@ export function LMS() {
                                 <Route
                                     path="/sidebar"
                                     element={<RightSidebar />}
+                                />
+                                <Route
+                                    path="/chatroom"
+                                    element={<Chatroom />}
                                 />
                             </Routes>
                         </ContentBox>

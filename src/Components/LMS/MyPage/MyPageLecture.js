@@ -4,7 +4,7 @@ import "../../../Styles/MyPageLecture.css";
 import styled, { keyframes } from "styled-components";
 // API 엔드포인트
 const urlCurrent = "http://localhost:8080/user/current"; // 세션 조회
-const urlRegi = "http://localhost:8080/course/registration"; // 모든 강의등록 조회(All)
+const urlRegi = "http://localhost:8080/api/course/registration"; // 모든 강의등록 조회(All)
 const urlProgress = "http://localhost:8080/progress/getAllLectureProgress"; // 진도 조회
 
 const fadeIn = keyframes`
@@ -22,6 +22,29 @@ const AnimationBox = styled.div`
     animation: ${fadeIn} 0.6s ease-out;
 `;
 
+const UserLectureBox = styled.div`
+    padding: 30px 100px 50px 100px;
+    width: 100%;
+    /* height: 500px; */
+    /* background-color: whitesmoke; */
+    background-color: transparent;
+`;
+
+const UserEducationActivityTitle = styled.div`
+    font-size: 26px;
+    font-family: 500;
+    margin-bottom: 30px;
+    margin-left: 55px;
+    color: #556b2f;
+`;
+
+const GraphYAxisSpan = styled.span`
+    position: relative;
+    top: -12px;
+    left: -18px;
+    color: white;
+`;
+
 export function MyPageLecture() {
     const [userId, setUserId] = useState(null); // User ID 데이터
     const [lectureData, setLectureData] = useState([]); // 강의 상태별 Count 데이터
@@ -37,7 +60,7 @@ export function MyPageLecture() {
 
                 // window.alert("UserId: " + data.userId);
 
-                const lecData = `http://localhost:8080/course/lectureStatusCount/id/${data.userId}`;
+                const lecData = `http://localhost:8080/api/course/lectureStatusCount/id/${data.userId}`;
                 await fetchLectureData(lecData); // 강의 상태별 Count 조회 및 상태 저장
                 await userDataSet(lecData); // 강의 상태별 Count 조회 및 그래프 세팅
             } catch (error) {
@@ -304,7 +327,7 @@ export function MyPageLecture() {
                 document.getElementById(`lectureCancelBtn-${index}`).onclick =
                     function () {
                         if (window.confirm("해당 강좌를 삭제하시겠습니까?")) {
-                            const deleteUrl = `http://localhost:8080/course/delCourseRegistration/${data.user.userId}/${data.lecture.lectureId}`;
+                            const deleteUrl = `http://localhost:8080/api/course/delCourseRegistration/${data.user.userId}/${data.lecture.lectureId}`;
 
                             axios
                                 .delete(deleteUrl, { withCredentials: true })
@@ -384,7 +407,7 @@ export function MyPageLecture() {
         // window.alert("TabPage: " + tab);
 
         if (tab === "summary") {
-            const lecData = `http://localhost:8080/course/lectureStatusCount/id/${userId}`;
+            const lecData = `http://localhost:8080/api/course/lectureStatusCount/id/${userId}`;
             userDataSet(lecData); // 강의 상태별 Count 조회 및 그래프 세팅
         } else {
             // studying, cancel, complete
@@ -397,8 +420,10 @@ export function MyPageLecture() {
             <div className="main-content">
                 {/* <div className="root"> */}
                 <div className="main-top">
-                    <div className="userLecture-box">
-                        <h2 className="userEducationActivityTitle">나의학습</h2>
+                    <UserLectureBox>
+                        <UserEducationActivityTitle>
+                            나의학습
+                        </UserEducationActivityTitle>
                         <div className="lectureMenuBox">
                             <div
                                 className={`lecturemenu ${
@@ -455,7 +480,9 @@ export function MyPageLecture() {
                                         <ul className="graphY-axis">
                                             {[...Array(11).keys()].map((i) => (
                                                 <li key={i}>
-                                                    <span>{10 - i}</span>
+                                                    <GraphYAxisSpan>
+                                                        {10 - i}
+                                                    </GraphYAxisSpan>
                                                 </li>
                                             ))}
                                         </ul>
@@ -601,7 +628,7 @@ export function MyPageLecture() {
                                 </div>
                             </div>
                         )}
-                    </div>
+                    </UserLectureBox>
                 </div>
             </div>
         </AnimationBox>

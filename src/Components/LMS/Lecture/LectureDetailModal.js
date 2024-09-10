@@ -36,7 +36,7 @@ const LectureHeaderImg = styled.div`
     padding: 176px 50px 0 240px;
     width: 100%;
     height: 350px;
-    background-image: url("/image/LectureDetail.png");
+    background-image: url("/reactimage/LectureDetail.png");
     background-size: cover;
     background-position: center;
     border-radius: 15px;
@@ -465,6 +465,7 @@ export function LectureDetailModal({ lectureId }) {
                         position: "absolute",
                         top: "10px",
                         right: "10px",
+                        color: "white", // 버튼 색상을 하얀색으로 설정
                     }}
                 >
                     &times;

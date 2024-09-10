@@ -3,7 +3,7 @@ import axios from "axios";
 import styled from "styled-components";
 
 const COUNT_PER_PAGE = 10;
-const API_URL = "http://localhost:8080/course/queryCECJPQL/";
+const API_URL = "http://localhost:8080/api/course/queryCECJPQL/";
 
 const LecutreAdminContainer = styled.div`
   color: #fff;

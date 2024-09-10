@@ -429,8 +429,8 @@ input::-ms-input-placeholder {
     position: relative;
     width: 100%;
     height: calc(100% / 10);
-    /* border-top: 1px solid #8c8c8c; */
-    border-top: 1px solid white;
+    border-top: 1px solid #8c8c8c;
+    /* border-top: 1px solid white; */
     text-align: left;
 }
 
@@ -453,13 +453,23 @@ input::-ms-input-placeholder {
     font-size: 20px;
 }
 
-.graphX-axis > li > div {
+/* .graphX-axis > li > div {
     width: 98px;
     height: 70px;
     padding-top: 40px;
     text-align: center;
-    /* background-color: yellow; */
-    color: white; /* 텍스트 색상을 하연색으로 설정 */
+    color: white;
+} */
+
+.graphX-axis > li > div {
+    width: 98px;
+    color: #fff;
+    z-index: 999;
+}
+
+.graphX-axis > li {
+    color: #fff;
+    z-index: 999;
 }
 
 .graphBar {

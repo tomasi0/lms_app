@@ -9,7 +9,7 @@ import { CourseModal } from "../Course/CourseModal";
 
 // API 엔드포인트
 const urlCurrent = "http://localhost:8080/user/current"; // 세션 조회
-const urlRegi = "http://localhost:8080/course/registration"; // 모든 강의등록 조회(All)
+const urlRegi = "http://localhost:8080/api/course/registration"; // 모든 강의등록 조회(All)
 const urlProgress = "http://localhost:8080/progress/getAllLectureProgress"; // 진도 조회
 
 // Sub Modal
@@ -56,7 +56,7 @@ export function MyPageLectureModal({ onClose }) {
 
                 // window.alert("UserId: " + data.userId);
 
-                const lecData = `http://localhost:8080/course/lectureStatusCount/id/${data.userId}`;
+                const lecData = `http://localhost:8080/api/course/lectureStatusCount/id/${data.userId}`;
                 await fetchLectureData(lecData); // 강의 상태별 Count 조회 및 상태 저장
                 await userDataSet(lecData); // 강의 상태별 Count 조회 및 그래프 세팅
             } catch (error) {
@@ -337,7 +337,7 @@ export function MyPageLectureModal({ onClose }) {
                 document.getElementById(`lectureCancelBtn-${index}`).onclick =
                     function () {
                         if (window.confirm("해당 강좌를 삭제하시겠습니까?")) {
-                            const deleteUrl = `http://localhost:8080/course/delCourseRegistration/${data.user.userId}/${data.lecture.lectureId}`;
+                            const deleteUrl = `http://localhost:8080/api/course/delCourseRegistration/${data.user.userId}/${data.lecture.lectureId}`;
 
                             axios
                                 .delete(deleteUrl, { withCredentials: true })
@@ -417,7 +417,7 @@ export function MyPageLectureModal({ onClose }) {
         // window.alert("TabPage: " + tab);
 
         if (tab === "summary") {
-            const lecData = `http://localhost:8080/course/lectureStatusCount/id/${userId}`;
+            const lecData = `http://localhost:8080/api/course/lectureStatusCount/id/${userId}`;
             userDataSet(lecData); // 강의 상태별 Count 조회 및 그래프 세팅
         } else {
             // studying, cancel, complete

@@ -47,7 +47,7 @@ const LectureListBox = styled.div`
 const LectureHeadText = styled.div`
     width: 100%;
     height: 300px;
-    background-image: url("/image/lectureHeader.png");
+    background-image: url("/reactimage/lectureHeader.png");
     background-size: cover;
     background-position: center;
     border-radius: 15px;

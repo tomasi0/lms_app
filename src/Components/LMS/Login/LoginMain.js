@@ -39,6 +39,9 @@ export function LoginMain() {
         setCurrentView("signup");
     };
 
+    // 240909 socket 관련 추가
+    // const socket = useWebSocket();
+
     const handleLogout = async () => {
         try {
             const response = await axios.post(

@@ -354,7 +354,7 @@ export function CourseModal({ userId, lectureId, onClose }) {
                                             <Button
                                                 onClick={() =>
                                                     openModal(
-                                                        learningData.learning_video_path
+                                                        learningData.learningVideo_path
                                                     )
                                                 }
                                             >

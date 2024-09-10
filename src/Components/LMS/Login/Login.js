@@ -14,7 +14,7 @@ const LoginContainer = styled.div`
 const Loginbg = styled.div`
     width: 100%;
     height: 100vh;
-    background-image: url("/image/LoginBG.png");
+    background-image: url("/reactimage/LoginBG.png");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;

@@ -396,7 +396,7 @@ export function CartModal() {
                     ) : (
                         <CartNoneBox>
                             <CartNone>
-                                <CartNoneImg src="/image/Cart.png"></CartNoneImg>
+                                <CartNoneImg src="/reactimage/Cart.png"></CartNoneImg>
                             </CartNone>
                             <CartNoneText>장바구니가 비었습니다</CartNoneText>
                             <LectureMoveBox>

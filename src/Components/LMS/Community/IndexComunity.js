@@ -119,7 +119,13 @@ export function IndexCommunity() {
       </Notices>
       <div></div>
       <Event>
-        <More>&#43;</More>
+        <More
+          onClick={() => {
+            navigate("/community/events");
+          }}
+        >
+          &#43;
+          </More>
         <CommunityInfo>이벤트</CommunityInfo>
         {events.map((data, index) => (
           <NoticesText key={index} onClick={() => openEventModal(data)}>

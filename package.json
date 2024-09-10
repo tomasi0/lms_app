@@ -16,7 +16,8 @@
     "react-unity-webgl": "^9.5.2",
     "sockjs-client": "^1.6.1",
     "styled-components": "^6.1.12",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "ws": "^8.18.0"
   },
   "scripts": {
     "start": "react-scripts start",

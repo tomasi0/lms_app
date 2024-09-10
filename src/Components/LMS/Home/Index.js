@@ -3,9 +3,9 @@ import { Navbar } from "../Navbar";
 import { LeftSidebar } from "../Sidebar";
 import { IndexCommunity } from "../Community/IndexComunity";
 import {
-  BestLecture,
-  IndexLecture,
-  IndexLectureImg,
+    BestLecture,
+    IndexLecture,
+    IndexLectureImg,
 } from "../Lecture/IndexLecture";
 import { Footer } from "../Footer";
 
@@ -21,25 +21,25 @@ const fadeIn = keyframes`
 `;
 
 const Container = styled.div`
-  box-sizing: border-box;
-  padding: 176px 32px 0 240px;
-  transition: all 0.3s;
-  min-height: 200vh;
-  animation: ${fadeIn} 0.6s ease-out;
+    box-sizing: border-box;
+    padding: 176px 32px 0 240px;
+    transition: all 0.3s;
+    min-height: 200vh;
+    animation: ${fadeIn} 0.6s ease-out;
 `;
 
 export function Index() {
-  return (
-    <>
-      <Navbar />
-      <LeftSidebar />
-      <Container>
-        <IndexLecture />
-        <IndexCommunity />
-        <IndexLectureImg />
-        <BestLecture />
-      </Container>
-      <Footer />
-    </>
-  );
+    return (
+        <>
+            <Navbar />
+            <LeftSidebar />
+            <Container>
+                <IndexLecture />
+                <IndexCommunity />
+                <IndexLectureImg />
+                <BestLecture />
+            </Container>
+            <Footer />
+        </>
+    );
 }
