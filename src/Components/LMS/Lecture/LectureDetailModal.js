@@ -182,6 +182,7 @@ const customStyles = {
         height: "800px", // 모달의 높이를 설정합니다. (기존 height)
         padding: "20px",
         borderRadius: "10px",
+        backgroundColor: "rgba(15, 16, 21, 0.5)", // 배경색 설정
     },
     overlay: {
         backgroundColor: "rgba(0, 0, 0, 0.5)", // 오버레이의 배경색을 설정합니다.

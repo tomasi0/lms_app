@@ -85,6 +85,7 @@ const customStyles = {
         height: "865px", // 모달의 높이를 설정합니다. (기존 height)
         padding: "20px",
         borderRadius: "10px",
+        backgroundColor: "rgba(15, 16, 21, 0.5)", // 배경색 설정
     },
     overlay: {
         backgroundColor: "rgba(0, 0, 0, 0.5)", // 오버레이의 배경색을 설정합니다.
@@ -174,14 +175,14 @@ export function UnityProject() {
     }
 
     // // Unity에서 호출될 JavaScript 함수
-    // function handleOpenReactWindow(romeName) {
+    // function handleOpenReactWindow(roomName) {
     //     // 예를 들어, 새로운 브라우저 창을 열도록 구현할 수 있습니다.
     //     // React 애플리케이션의 URL로 새로운 탭을 열기
     //     window.open("http://localhost:3000/community/notices", "_blank");
     // }
 
     // Unity에서 호출될 JavaScript 함수
-    function handleOpenReactWindow(romeName) {
+    function handleOpenReactWindow(roomName) {
         // 예를 들어, 새로운 브라우저 창을 열도록 구현할 수 있습니다.
         // React 애플리케이션의 URL로 새로운 탭을 열기
 
@@ -192,31 +193,31 @@ export function UnityProject() {
         // Community (공지사항, 이벤트, 질의응답)
         // Lecture & Cart (강의, 장바구니, 로그아웃)
 
-        if (romeName == "회원정보") {
+        if (roomName == "회원정보") {
             setModalReturn(() => MyPageUser); // React component function
-        } else if (romeName == "나의학습") {
+        } else if (roomName == "나의학습") {
             setModalReturn(() => MyPageLectureModal); // => 새로운 브라우저 창 열기
-        } else if (romeName == "회원탈퇴") {
+        } else if (roomName == "회원탈퇴") {
             setModalReturn(() => MyPageUserDelete); // React component function
-        } else if (romeName == "공지사항") {
+        } else if (roomName == "공지사항") {
             setModalReturn(() => NoticesModal); // React component function
-        } else if (romeName == "이벤트") {
+        } else if (roomName == "이벤트") {
             setModalReturn(() => EventsModal); // React component function
-        } else if (romeName == "질의응답") {
+        } else if (roomName == "질의응답") {
             setModalReturn(() => QAModal); // React component function
-        } else if (romeName == "회원관리") {
+        } else if (roomName == "회원관리") {
             setModalReturn(() => UserManagement); // React component function
-        } else if (romeName == "강의관리") {
+        } else if (roomName == "강의관리") {
             setModalReturn(() => LectureManagement); // React component function
-        } else if (romeName == "수강관리") {
+        } else if (roomName == "수강관리") {
             setModalReturn(() => EnrollmentManagement); // React component function
-        } else if (romeName == "강의") {
+        } else if (roomName == "강의") {
             setModalReturn(() => LectureListModal); // => 새로운 브라우저 창 열기
-        } else if (romeName == "장바구니") {
+        } else if (roomName == "장바구니") {
             setModalReturn(() => CartModal); // React component function
-        } else if (romeName == "로그아웃") {
+        } else if (roomName == "로그아웃") {
             setModalReturn(() => {
-                window.location.href = "http://localhost:3000/Login";
+                window.location.href = "/login";
             }); // React component function
         }
     }

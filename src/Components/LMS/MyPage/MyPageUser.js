@@ -15,13 +15,15 @@ const fadeIn = keyframes`
 
 const MainContent = styled.div`
     animation: ${fadeIn} 0.6s ease-out;
-    padding: 20px;
+    /* padding: 20px; */
+    padding: 0px 20px;
     color: #fff;
 `;
 
 const UserInfoBox = styled.div`
     margin-left: 100px;
-    padding: 20px;
+    /* padding: 20px; */
+    padding: 0px 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     width: 70%;
@@ -69,7 +71,8 @@ const Checkbox = styled.input`
 
 const Form = styled.form`
     display: flex;
-    align-items: center;
+    gap: 10px;
+    justify-content: center;
     ul {
         display: flex;
         align-items: center;
@@ -85,15 +88,29 @@ const Form = styled.form`
 `;
 
 const Button = styled.div`
-    padding: 10px 20px;
+    padding: 12px 24px;
     background-color: #007bff;
     color: #fff;
-    border-radius: 4px;
+    border-radius: 8px;
     cursor: pointer;
     text-align: center;
+    margin-top: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, transform 0.2s ease,
+        box-shadow 0.3s ease;
 
     &:hover {
         background-color: #0056b3;
+        transform: translateY(-3px);
+        box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    &:active {
+        background-color: #003d80;
+        transform: translateY(0);
+        box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
     }
 `;
 
@@ -139,7 +156,8 @@ export function MyPageUser() {
             } catch (error) {
                 console.error("Error fetching user data:", error);
                 alert("로그인해주세요.");
-                window.location.href = "http://localhost:3000/home";
+                // window.location.href = "http://localhost:3000/home";
+                window.location.href = "/login";
             }
         };
 
@@ -425,7 +443,13 @@ export function MyPageUser() {
                         </li>
                     </ul>
                 </Form>
-                <div style={{ display: "flex", gap: "10px" }}>
+                <div
+                    style={{
+                        display: "flex",
+                        gap: "10px",
+                        justifyContent: "center",
+                    }}
+                >
                     {isEditing ? (
                         <>
                             <Button onClick={handleUpdate}>저장</Button>

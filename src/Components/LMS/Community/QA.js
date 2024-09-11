@@ -155,25 +155,20 @@ const Table = styled.table`
 
 const PaginationContainer = styled.div`
   display: flex;
-  justify-content: center; /* 가로 가운데 정렬 */
-  align-items: center; /* 세로 가운데 정렬 */
+  justify-content: center; /* 페이지네이션 버튼들을 가운데 정렬 */
+  align-items: center;
   margin-top: 20px;
-  gap: 15px; /* 버튼과 페이지 정보 사이 간격 추가 */
+  gap: 10px; /* 버튼 사이 간격 추가 */
 `;
 
 const PaginationButton = styled.button`
-  background-color: #00adb5;
+  background-color: ${(props) =>
+    props.disabled ? "#555" : "#00adb5"}; /* 비활성화 시 버튼 배경 색상 변경 */
   color: white;
   border: none;
   padding: 10px 20px;
   border-radius: 5px;
-  cursor: pointer;
-
-  &:disabled {
-    background-color: #444; /* 비활성화 시 색상 변경 */
-    cursor: not-allowed;
-  }
-
+  cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
   &:hover:not(:disabled) {
     background-color: #0056b3;
   }
@@ -246,6 +241,7 @@ const QuestionTitle = styled.h3`
   color: #00adb5;
   margin-bottom: 20px;
   font-size: 1.5em;
+  background-color: transparent;
 `;
 
 const InfoText = styled.p`
@@ -254,7 +250,9 @@ const InfoText = styled.p`
   strong {
     font-weight: bold;
     color: #f7b731;
+    background-color: transparent;
   }
+  background-color: transparent;
 `;
 
 const AnswerSection = styled.div`
@@ -262,21 +260,25 @@ const AnswerSection = styled.div`
   h4 {
     color: #00adb5;
     margin-bottom: 10px;
+    background-color: transparent;
   }
   p {
     background-color: #23262d;
     padding: 10px;
     border-radius: 5px;
   }
+  background-color: transparent;
 `;
 
 const AdminSection = styled.div`
   margin-top: 20px;
+  background-color: transparent;
   
   h3 {
     color: #00adb5;
     text-align: left; /* h3를 좌측 정렬 */
     width: 100%; /* 좌측 정렬을 위해 전체 너비 차지 */
+    background-color: transparent;
   }
 
   textarea {
@@ -445,7 +447,7 @@ export function QA() {
   const handlePageChange = (newPage) => {
     if (newPage > 0 && newPage <= totalPages) {
       setCurrentPage(newPage);
-      fetchQuestions(newPage, category);
+      fetchQuestions(newPage, category); 
     }
   };
 
@@ -513,11 +515,9 @@ export function QA() {
             >
               기타
             </CategoryButton>
-            <WriteButton>
               {isLoggedIn && (
-                <Button onClick={() => setSelectedQuestion("new")}>질문 작성</Button>
+                <WriteButton onClick={() => setSelectedQuestion("new")}>질문 작성</WriteButton>
               )}
-            </WriteButton>
             </ButtonContainer>
 
           <div style={{ marginTop: "20px" }}>
@@ -569,24 +569,30 @@ export function QA() {
           </tbody>
           </Table>
           <PaginationContainer>
-            <div style={{ marginTop: "20px" }}>
-              <PaginationButton
-                onClick={() => handlePageChange(currentPage - 1)}
-                disabled={currentPage === 1}
-              >
-                이전
-              </PaginationButton>
-              <span>
-                {currentPage} / {totalPages}
-              </span>
-              <PaginationButton
-                onClick={() => handlePageChange(currentPage + 1)}
-                disabled={currentPage === totalPages}
-              >
-                다음
-              </PaginationButton>
-            </div>
-          </PaginationContainer>
+        <PaginationButton
+          onClick={() => handlePageChange(currentPage - 1)}
+          disabled={currentPage === 1}  // 첫 페이지일 때 비활성화
+        >
+          이전
+        </PaginationButton>
+        
+        {Array.from({ length: totalPages }, (_, i) => (
+          <PaginationButton
+            key={i + 1}
+            onClick={() => handlePageChange(i + 1)}  // 페이지 번호 버튼 클릭 시 해당 페이지로 이동
+            disabled={i + 1 === currentPage}  // 현재 페이지는 비활성화
+          >
+            {i + 1}
+          </PaginationButton>
+        ))}
+
+        <PaginationButton
+          onClick={() => handlePageChange(currentPage + 1)}
+          disabled={currentPage === totalPages}  // 마지막 페이지일 때 비활성화
+        >
+          다음
+        </PaginationButton>
+      </PaginationContainer>
           
         </>
       )}

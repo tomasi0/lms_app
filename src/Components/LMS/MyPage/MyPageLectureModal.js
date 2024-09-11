@@ -4,6 +4,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../../../Styles/MyPageLecture.css";
+import styled, { keyframes } from "styled-components";
 
 import { CourseModal } from "../Course/CourseModal";
 
@@ -28,11 +29,131 @@ const customStyles = {
         height: "800px", // 모달의 높이를 설정합니다. (기존 height)
         padding: "20px",
         borderRadius: "10px",
+        backgroundColor: "rgba(15, 16, 21, 0.5)", // 배경색 설정
     },
     overlay: {
         backgroundColor: "rgba(0, 0, 0, 0.5)", // 오버레이의 배경색을 설정합니다.
     },
 };
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
+const AnimationBox = styled.div`
+    animation: ${fadeIn} 0.6s ease-out;
+`;
+
+const UserLectureBox = styled.div`
+    padding: 30px 100px 50px 100px;
+    width: 100%;
+    /* height: 500px; */
+    /* background-color: whitesmoke; */
+    background-color: transparent;
+`;
+
+const UserEducationActivityTitle = styled.div`
+    font-size: 26px;
+    font-weight: 800;
+    margin-bottom: 30px;
+    margin-left: 55px;
+    color: #556b2f;
+`;
+
+const UserSummaryTitle = styled.div`
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 30px;
+    margin-left: 80px;
+    color: white;
+`;
+
+const GraphYAxisSpan = styled.span`
+    position: relative;
+    top: -12px;
+    left: -18px;
+    color: white;
+`;
+
+const ButtonPrimary = styled.button`
+    background-color: #4a90e2; /* 청록색 */
+    color: #fff;
+    border: 2px solid #4a90e2;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 10px;
+
+    &:hover {
+        background-color: transparent;
+        color: #4a90e2;
+    }
+`;
+
+const ButtonSecondary = styled.button`
+    background-color: #e94e77; /* 딥 핑크 */
+    color: #fff;
+    border: 2px solid #e94e77;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 10px;
+
+    &:hover {
+        background-color: transparent;
+        color: #e94e77;
+    }
+`;
+
+const ButtonTertiary = styled.button`
+    background-color: #f5a623; /* 주황색 */
+    color: #fff;
+    border: 2px solid #f5a623;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 10px;
+
+    &:hover {
+        background-color: transparent;
+        color: #f5a623;
+    }
+`;
+
+const ButtonNeutral = styled.button`
+    background-color: #7ed321; /* 연한 초록색 */
+    color: #fff;
+    border: 2px solid #7ed321;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+        background-color: transparent;
+        color: #7ed321;
+    }
+`;
+
+const BtnBox = styled.div`
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+`;
 
 // export function MyPageLectureModal() {
 export function MyPageLectureModal({ onClose }) {
@@ -231,7 +352,7 @@ export function MyPageLectureModal({ onClose }) {
                         classRoomBtn.addEventListener("click", () => {
                             // const courseUserId = data.user.userId;
                             // const courseLectureId = data.lecture.lectureId;
-                            // http://localhost:3000/course/test01/L00000000057
+                            // http://localhost:3000/api/course/test01/L00000000057
 
                             // 현재 URL에서 '/mypage/'를 제거
                             // const baseUrl = window.location.href.replace(
@@ -445,246 +566,243 @@ export function MyPageLectureModal({ onClose }) {
 
     return (
         // <div className="container">
-        <div className="main-content">
-            {/* <div className="root"> */}
-            <div className="main-top">
-                <div className="userLecture-box">
-                    <h2 className="userLectureBoxTitle">나의학습</h2>
-                    <div className="lectureMenuBox">
-                        <div
-                            className={`lecturemenu ${
-                                currentTab === "summary" ? "active" : ""
-                            }`}
-                            onClick={() => handleTabClick("summary")}
-                        >
-                            요약정보
-                        </div>
-                        <div
-                            className={`lecturemenu ${
-                                currentTab === "studying" ? "active" : ""
-                            }`}
-                            onClick={() => handleTabClick("studying")}
-                        >
-                            학습중
-                        </div>
-                        <div
-                            className={`lecturemenu ${
-                                currentTab === "cancel" ? "active" : ""
-                            }`}
-                            onClick={() => handleTabClick("cancel")}
-                        >
-                            수강취소
-                        </div>
-                        <div
-                            className={`lecturemenu ${
-                                currentTab === "complete" ? "active" : ""
-                            }`}
-                            onClick={() => handleTabClick("complete")}
-                        >
-                            수강종료
-                        </div>
-                    </div>
+        <AnimationBox>
+            <div className="main-content">
+                {/* <div className="root"> */}
+                <div className="main-top">
+                    <UserLectureBox>
+                        <UserEducationActivityTitle>
+                            나의학습
+                        </UserEducationActivityTitle>
+                        <BtnBox>
+                            <ButtonPrimary
+                                onClick={() => handleTabClick("summary")}
+                            >
+                                요약정보
+                            </ButtonPrimary>
+                            <ButtonSecondary
+                                onClick={() => handleTabClick("studying")}
+                            >
+                                학습중
+                            </ButtonSecondary>
+                            <ButtonTertiary
+                                onClick={() => handleTabClick("cancel")}
+                            >
+                                수강취소
+                            </ButtonTertiary>
+                            <ButtonNeutral
+                                onClick={() => handleTabClick("complete")}
+                            >
+                                수강종료
+                            </ButtonNeutral>
+                        </BtnBox>
+                        {currentTab === "summary" && (
+                            <div className="userLectureGraphContainer">
+                                <UserSummaryTitle>
+                                    나의 학습활동
+                                </UserSummaryTitle>
+                                <div className="userLectureGraph">
+                                    {/* <div className="userGraphSearchBar">
+                                        <select
+                                            id="userGraphSearchYears"
+                                            required
+                                        >
+                                            <option value="" disabled selected>
+                                                연도
+                                            </option>
+                                            <option value="2024">2024</option>
+                                        </select>
+                                        <div id="userGraphSearchBtn">검색</div>
+                                    </div> */}
 
-                    {currentTab === "summary" && (
-                        <div className="userLectureGraphContainer">
-                            <h2 className="userEducationActivityTitle">
-                                나의 학습활동
-                            </h2>
-                            <div className="userLectureGraph">
-                                <div className="userGraphSearchBar">
-                                    <select id="userGraphSearchYears" required>
-                                        <option value="" disabled selected>
-                                            연도
-                                        </option>
-                                        <option value="2024">2024</option>
-                                    </select>
-                                    <div id="userGraphSearchBtn">검색</div>
-                                </div>
+                                    <div className="userLectureGraphGraduations">
+                                        {/* 그래프 눈금 */}
+                                        <ul className="graphY-axis">
+                                            {[...Array(11).keys()].map((i) => (
+                                                <li key={i}>
+                                                    <GraphYAxisSpan>
+                                                        {10 - i}
+                                                    </GraphYAxisSpan>
+                                                </li>
+                                            ))}
+                                        </ul>
 
-                                <div className="userLectureGraphGraduations">
-                                    {/* 그래프 눈금 */}
-                                    <ul className="graphY-axis">
-                                        {[...Array(11).keys()].map((i) => (
-                                            <li key={i}>
-                                                <span>{10 - i}</span>
-                                            </li>
-                                        ))}
-                                    </ul>
-
-                                    {/* 그래프 바 */}
-                                    <ul className="graphBar">
-                                        {lectureData.map((_, index) => (
-                                            <li key={index}>
-                                                <div
-                                                    id={`classGraphBar${
-                                                        index + 1
-                                                    }`}
-                                                >
-                                                    <div className="graphNumBottom"></div>
+                                        {/* 그래프 바 */}
+                                        <ul className="graphBar">
+                                            {lectureData.map((_, index) => (
+                                                <li key={index}>
                                                     <div
-                                                        className={`graphNum graphNum${
+                                                        id={`classGraphBar${
                                                             index + 1
                                                         }`}
-                                                    ></div>
-                                                </div>
+                                                    >
+                                                        <div className="graphNumBottom"></div>
+                                                        <div
+                                                            className={`graphNum graphNum${
+                                                                index + 1
+                                                            }`}
+                                                        ></div>
+                                                    </div>
+                                                </li>
+                                            ))}
+                                        </ul>
+
+                                        {/* 그래프 목록 */}
+                                        <ul className="graphX-axis">
+                                            <li>
+                                                <div>수강신청</div>
                                             </li>
-                                        ))}
-                                    </ul>
-
-                                    {/* 그래프 목록 */}
-                                    <ul className="graphX-axis">
-                                        <li>
-                                            <div>수강신청</div>
-                                        </li>
-                                        <li>
-                                            <div>수강대기</div>
-                                        </li>
-                                        <li>
-                                            <div>수강반려</div>
-                                        </li>
-                                        <li>
-                                            <div>학습중</div>
-                                        </li>
-                                        <li>
-                                            <div>수료처리중</div>
-                                        </li>
-                                        <li>
-                                            <div>수료</div>
-                                        </li>
-                                        <li>
-                                            <div>미수료</div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    )}
-
-                    {currentTab === "studying" && (
-                        <div className="userLectureStudyingContainer">
-                            <div className="studyingList">
-                                <table className="studying-table">
-                                    <thead>
-                                        <tr className="lecTableList">
-                                            <th colspan="2">강의제목</th>
-                                            <th>교육기간</th>
-                                            <th>진도율</th>
-                                            <th>
-                                                <a href="#">강의실</a>
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody className="studying-body">
-                                        {/* 학습중 강의를 여기에 추가 */}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    )}
-
-                    {currentTab === "cancel" && (
-                        <div className="userLectureCancelContainer">
-                            <div className="userCancelLecSearchBarBorder">
-                                <div className="userCancelLecSearchBar">
-                                    <select
-                                        id="userCancelLecSearchYears"
-                                        required
-                                    >
-                                        <option value="" disabled selected>
-                                            연도
-                                        </option>
-                                        <option value="2024">2024</option>
-                                    </select>
-                                    <div id="userCancelLecSearchBtn">검색</div>
-                                </div>
-                            </div>
-
-                            <div className="cancelList">
-                                <table className="cancel-table">
-                                    <thead>
-                                        <tr className="lecCancelList">
-                                            <th colspan="2">강의제목</th>
-                                            <th>교육기간</th>
-                                            <th>수강신청일</th>
-                                            <th>상태</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody className="cancel-body">
-                                        {/* 수강취소 강의를 여기에 추가 */}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    )}
-
-                    {currentTab === "complete" && (
-                        <div className="userLectureCompleteContainer">
-                            <div className="userCompleteLecSearchBarBorder">
-                                <div className="userCompleteLecSearchBar">
-                                    <select required>
-                                        <option value="" disabled selected>
-                                            연도
-                                        </option>
-                                        <option value="2024">2024</option>
-                                    </select>
-                                    <div id="userCompleteLecSearchBtn">
-                                        검색
+                                            <li>
+                                                <div>수강대기</div>
+                                            </li>
+                                            <li>
+                                                <div>수강반려</div>
+                                            </li>
+                                            <li>
+                                                <div>학습중</div>
+                                            </li>
+                                            <li>
+                                                <div>수료처리중</div>
+                                            </li>
+                                            <li>
+                                                <div>수료</div>
+                                            </li>
+                                            <li>
+                                                <div>미수료</div>
+                                            </li>
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
+                        )}
 
-                            <div className="completelList">
-                                <table className="complete-table">
-                                    <thead>
-                                        <tr className="lecCompleteList">
-                                            <th colspan="2">강의제목</th>
-                                            <th>교육기간</th>
-                                            <th>수료</th>
-                                            <th>리뷰</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody className="complete-body">
-                                        {/* 수강완료 강의를 여기에 추가 */}
-                                    </tbody>
-                                </table>
+                        {currentTab === "studying" && (
+                            <div className="userLectureStudyingContainer">
+                                <div className="studyingList">
+                                    <table className="studying-table">
+                                        <thead>
+                                            <tr className="lecTableList">
+                                                <th colspan="2">강의제목</th>
+                                                <th>교육기간</th>
+                                                <th>진도율</th>
+                                                <th>
+                                                    <a href="#">강의실</a>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody className="studying-body">
+                                            {/* 학습중 강의를 여기에 추가 */}
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
-                        </div>
-                    )}
-                </div>
-            </div>
+                        )}
 
-            {/* 서브 모달 */}
-            <Modal
-                isOpen={modalOpen}
-                onRequestClose={closeModal}
-                style={customStyles}
-                contentLabel="Course"
-            >
-                <span
-                    className="close"
-                    onClick={closeModal}
-                    style={{
-                        cursor: "pointer",
-                        fontSize: "1.5rem",
-                        position: "absolute",
-                        top: "10px",
-                        right: "10px",
-                        color: "white", // 버튼 색상을 하얀색으로 설정
-                    }}
+                        {currentTab === "cancel" && (
+                            <div className="userLectureCancelContainer">
+                                {/* <div className="userCancelLecSearchBarBorder">
+                                    <div className="userCancelLecSearchBar">
+                                        <select
+                                            id="userCancelLecSearchYears"
+                                            required
+                                        >
+                                            <option value="" disabled selected>
+                                                연도
+                                            </option>
+                                            <option value="2024">2024</option>
+                                        </select>
+                                        <div id="userCancelLecSearchBtn">
+                                            검색
+                                        </div>
+                                    </div>
+                                </div> */}
+
+                                <div className="cancelList">
+                                    <table className="cancel-table">
+                                        <thead>
+                                            <tr className="lecCancelList">
+                                                <th colspan="2">강의제목</th>
+                                                <th>교육기간</th>
+                                                <th>수강신청일</th>
+                                                <th>상태</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody className="cancel-body">
+                                            {/* 수강취소 강의를 여기에 추가 */}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        )}
+
+                        {currentTab === "complete" && (
+                            <div className="userLectureCompleteContainer">
+                                {/* <div className="userCompleteLecSearchBarBorder">
+                                    <div className="userCompleteLecSearchBar">
+                                        <select required>
+                                            <option value="" disabled selected>
+                                                연도
+                                            </option>
+                                            <option value="2024">2024</option>
+                                        </select>
+                                        <div id="userCompleteLecSearchBtn">
+                                            검색
+                                        </div>
+                                    </div>
+                                </div> */}
+
+                                <div className="completelList">
+                                    <table className="complete-table">
+                                        <thead>
+                                            <tr className="lecCompleteList">
+                                                <th colspan="2">강의제목</th>
+                                                <th>교육기간</th>
+                                                <th>수료</th>
+                                                <th>리뷰</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody className="complete-body">
+                                            {/* 수강완료 강의를 여기에 추가 */}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        )}
+                    </UserLectureBox>
+                </div>{" "}
+                {/* main-top End! */}
+                {/* 서브 모달 */}
+                <Modal
+                    isOpen={modalOpen}
+                    onRequestClose={closeModal}
+                    style={customStyles}
+                    contentLabel="Course"
                 >
-                    &times;
-                </span>
-                <div
-                    className="subModalContent"
-                    style={{
-                        width: "1240px",
-                        height: "740px",
-                        // overflow: "hidden",
-                        overflow: "auto", // 스크롤을 활성화합니다.
-                    }}
-                >
-                    {/* 모달 콘텐츠를 동적으로 렌더링할 수 있습니다 */}
-                    {/* {modalContent ? (
+                    <span
+                        className="close"
+                        onClick={closeModal}
+                        style={{
+                            cursor: "pointer",
+                            fontSize: "1.5rem",
+                            position: "absolute",
+                            top: "10px",
+                            right: "10px",
+                            color: "white", // 버튼 색상을 하얀색으로 설정
+                        }}
+                    >
+                        &times;
+                    </span>
+                    <div
+                        className="subModalContent"
+                        style={{
+                            width: "1240px",
+                            height: "740px",
+                            // overflow: "hidden",
+                            overflow: "auto", // 스크롤을 활성화합니다.
+                        }}
+                    >
+                        {/* 모달 콘텐츠를 동적으로 렌더링할 수 있습니다 */}
+                        {/* {modalContent ? (
                         <iframe
                             src={modalContent}
                             style={{ width: "100%", height: "100%" }}
@@ -694,24 +812,25 @@ export function MyPageLectureModal({ onClose }) {
                         <p>Loading...</p>
                     )} */}
 
-                    {modalContent ? (
-                        // <iframe
-                        //     src={modalContent}
-                        //     style={{ width: "100%", height: "100%" }}
-                        //     title="Course"
-                        // />
+                        {modalContent ? (
+                            // <iframe
+                            //     src={modalContent}
+                            //     style={{ width: "100%", height: "100%" }}
+                            //     title="Course"
+                            // />
 
-                        <CourseModal
-                            userId={modalContent.userId}
-                            lectureId={modalContent.lectureId}
-                            onClose={closeModal}
-                        />
-                    ) : (
-                        <p>Loading...</p>
-                    )}
-                </div>
-            </Modal>
-        </div>
+                            <CourseModal
+                                userId={modalContent.userId}
+                                lectureId={modalContent.lectureId}
+                                onClose={closeModal}
+                            />
+                        ) : (
+                            <p>Loading...</p>
+                        )}
+                    </div>
+                </Modal>
+            </div>
+        </AnimationBox>
     );
 }
 

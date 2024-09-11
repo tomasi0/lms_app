@@ -30,6 +30,9 @@ const NoticeBoardContainer = styled.div`
     padding: 20px;
     margin-top: 5%;
     border-radius: 8px;
+    margin: 0 auto; /* 화면 중앙에 배치 */
+    margin-top: 5%;
+    width: 70%;
 `;
 
 const Title = styled.h2`
@@ -37,9 +40,113 @@ const Title = styled.h2`
 `;
 
 const NoticeTable = styled.table`
-    width: 100%;
-    border-collapse: collapse;
-    background-color: #1c1e24; /* 배경색 짙은 회색 */
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px; /* 위쪽 여백 추가 */
+  
+  th, td {
+    padding: 10px; /* 셀 안쪽 여백 */
+    border: 1px solid #444; /* 테두리 색상 */
+    text-align: left; /* 텍스트 좌측 정렬 */
+    height: 50px; /* 셀 높이 고정 */
+    vertical-align: middle; /* 텍스트 세로 가운데 정렬 */
+    font-size: 14px; /* 폰트 크기 통일 */
+  }
+
+  /* 컬럼 별 너비 지정 */
+  th:nth-child(1), td:nth-child(1) {
+    width: 10%; /* No */
+  }
+
+  th:nth-child(2), td:nth-child(2) {
+    width: 10%; /* 카테고리 */
+  }
+
+  th:nth-child(3), td:nth-child(3) {
+    width: 50%; /* 제목 */
+  }
+
+  th:nth-child(4), td:nth-child(4) {
+    width: 10%; /* 작성자 */
+  }
+
+  th:nth-child(5), td:nth-child(5) {
+    width: 10%; /* 등록일 */
+  }
+
+  th:nth-child(6), td:nth-child(6) {
+    width: 10%; /* 조회수 */
+  }
+
+  th {
+    background-color: #1c1e24; /* 헤더 배경색 */
+    color: #ffffff; /* 헤더 텍스트 색상 */
+  }
+
+  td {
+    background-color: #23262d; /* 셀 배경색 */
+    color: #e0e0e0; /* 셀 텍스트 색상 */
+  }
+
+  /* 제목 셀에만 hover 효과 추가 */
+  td.notice-title:hover {
+    background-color: #00adb5;
+    color: #ffffff;
+  }
+`;
+
+const NoticeForm = styled.form`
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+`;
+
+const FormSelect = styled.select`
+    padding: 10px;
+    border: 1px solid #444;
+    background-color: #1c1e24;
+    color: #e0e0e0;
+    border-radius: 4px;
+`;
+
+const FormInput = styled.input`
+    padding: 10px;
+    border: 1px solid #444;
+    background-color: #1c1e24;
+    color: #e0e0e0;
+    border-radius: 4px;
+`;
+
+const FormTextarea = styled.textarea`
+    padding: 10px;
+    border: 1px solid #444;
+    background-color: #1c1e24;
+    color: #e0e0e0;
+    border-radius: 4px;
+`;
+
+const SubmitButton = styled.button`
+    padding: 10px 20px;
+    background-color: #00adb5;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+`;
+
+const CancelButton = styled.button`
+    padding: 10px 20px;
+    background-color: #dc3545; /* 취소 버튼 색상 빨간색 */
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-left: 10px; /* 다른 버튼과 간격을 두기 위해 왼쪽 여백 추가 */
+
+    &:hover {
+        background-color: #c82333; /* 마우스를 올렸을 때 더 진한 빨간색 */
+    }
 `;
 
 const TableHead = styled.thead`
@@ -92,71 +199,70 @@ const CreateNoticeButton = styled.button`
 `;
 
 const NoticeDetail = styled.div`
-    margin: 20px 0;
+    background-color: #1c1e24; /* 배경색 */
     padding: 20px;
-    border: 1px solid #333; /* 테두리 색상 어둡게 변경 */
-    background-color: #23262d; /* 상세보기 배경색 어두운 회색으로 변경 */
-    color: #e0e0e0; /* 텍스트 색상 밝은 회색으로 변경 */
-    border-radius: 8px;
+    border-radius: 10px; /* 모서리 둥글게 */
+    color: #e0e0e0; /* 텍스트 색상 */
+    margin-top: 20px;
 `;
 
-const NoticeForm = styled.form`
+const NoticeTitle = styled.h3`
+    color: #00adb5; /* 제목 색상 */
+    margin-bottom: 20px; /* 제목과 내용 사이의 여백 */
+    font-size: 1.5em;
+    background-color: transparent; /* 배경 투명 */
+`;
+
+const InfoText = styled.p`
+    margin: 10px 0;
+    font-size: 1em;
+    strong {
+        font-weight: bold;
+        color: #f7b731; /* 강조된 텍스트 색상 */
+        background-color: transparent;
+    }
+    background-color: transparent;
+`;
+
+const AdminSection = styled.div`
     margin-top: 20px;
+    background-color: transparent;
+  
+    h3 {
+        color: #00adb5;
+        text-align: left; /* 좌측 정렬 */
+        width: 100%; /* 좌측 정렬을 위한 너비 */
+        background-color: transparent;
+    }
+
+    textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #444; /* 테두리 색상 */
+        border-radius: 5px; /* 모서리 둥글게 */
+        background-color: #23262d;
+        color: white;
+        min-height: 100px;
+        margin-bottom: 20px;
+    }
+
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    align-items: flex-end; /* 우측 정렬 */
 `;
 
-const FormInput = styled.input`
-    padding: 10px;
-    border: 1px solid #444; /* 입력 필드 테두리 어둡게 변경 */
-    background-color: #1c1e24; /* 입력 필드 배경색 어두운 회색으로 변경 */
-    color: #e0e0e0; /* 입력 필드 텍스트 색상 밝은 회색으로 변경 */
-    border-radius: 4px;
-`;
-
-const FormTextarea = styled.textarea`
-    padding: 10px;
-    border: 1px solid #444; /* 입력 필드 테두리 어둡게 변경 */
-    background-color: #1c1e24; /* 입력 필드 배경색 어두운 회색으로 변경 */
-    color: #e0e0e0; /* 입력 필드 텍스트 색상 밝은 회색으로 변경 */
-    border-radius: 4px;
-`;
-
-const FormSelect = styled.select`
-    padding: 10px;
-    border: 1px solid #444; /* 선택 필드 테두리 어둡게 변경 */
-    background-color: #1c1e24; /* 선택 필드 배경색 어두운 회색으로 변경 */
-    color: #e0e0e0; /* 선택 필드 텍스트 색상 밝은 회색으로 변경 */
-    border-radius: 4px;
-`;
-
-const SubmitButton = styled.button`
-    padding: 10px 20px;
+const ActionButton = styled.button`
     background-color: #00adb5;
     color: white;
     border: none;
-    cursor: pointer;
-    border-radius: 4px;
-`;
-
-const CancelButton = styled.button`
     padding: 10px 20px;
-    background-color: #dc3545; /* 취소 버튼 색상 빨간색으로 변경 */
-    color: white;
-    border: none;
+    border-radius: 5px;
     cursor: pointer;
-    border-radius: 4px;
-`;
+    margin-right: 10px;
 
-const DeleteButton = styled.button`
-    padding: 10px 20px;
-    background-color: #dc3545; /* 삭제 버튼 색상 빨간색으로 변경 */
-    color: white;
-    border: none;
-    cursor: pointer;
-    margin-top: 10px;
-    border-radius: 4px;
+    &:hover {
+        background-color: #30619c;
+    }
 `;
 
 export function Notices() {
@@ -340,37 +446,39 @@ export function Notices() {
                         {/* 상세보기 모드 */}
                         {selectedNotice ? (
                             <NoticeDetail>
-                                <h3>{selectedNotice.lmsNoticesTitle}</h3>
-                                <p>{selectedNotice.lmsNoticesContent}</p>
-                                <p>
+                                <NoticeTitle>{selectedNotice.lmsNoticesTitle}</NoticeTitle>
+                                <InfoText>{selectedNotice.lmsNoticesContent}</InfoText>
+                                <InfoText>
                                     작성자:{" "}
                                     {selectedNotice.user
                                         ? selectedNotice.user.userNameKor
                                         : "관리자"}
-                                </p>
-                                <p>
+                                </InfoText>
+                                <InfoText>
                                     등록일:{" "}
                                     {new Date(
                                         selectedNotice.lmsNoticesWritingDate
                                     ).toLocaleDateString()}
-                                </p>
-                                <p>
+                                </InfoText>
+                                <InfoText>
                                     조회수: {selectedNotice.lmsNoticesViewCount}
-                                </p>
-                                <button onClick={backToList}>
+                                </InfoText>
+                                <ActionButton onClick={backToList}>
                                     목록으로 돌아가기
-                                </button>
+                                </ActionButton>
                                 {/* 관리자일 경우 삭제 버튼 표시 */}
                                 {isAdmin && (
-                                    <DeleteButton
-                                        onClick={() =>
-                                            deleteSelectedNotice(
-                                                selectedNotice.lmsNoticesSeq
-                                            )
-                                        }
-                                    >
-                                        삭제
-                                    </DeleteButton>
+                                    <AdminSection>
+                                        <ActionButton
+                                            onClick={() =>
+                                                deleteSelectedNotice(
+                                                    selectedNotice.lmsNoticesSeq
+                                                )
+                                            }
+                                        >
+                                            삭제
+                                        </ActionButton>
+                                    </AdminSection>
                                 )}
                             </NoticeDetail>
                         ) : (
