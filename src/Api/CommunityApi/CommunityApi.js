@@ -152,9 +152,23 @@ export async function getQuestionById(id) {
   }
 }
 
+//0912
 export async function createQuestion(question) {
   try {
-    const response = await api.post("/api/qa/newQuestion", question);
+    // JSON 형태로 질문 데이터를 포함한 API 호출
+    const response = await api.post("/api/qa/newQuestion", {
+      lmsQaTitle: question.lmsQaTitle,
+      lmsQaContent: question.lmsQaContent,
+      categoryId: question.categoryId,
+      lmsQaWritingDate: question.lmsQaWritingDate,
+      user: {
+        userId: question.user.userId,
+        userNameKor: question.user.userNameKor,
+      },
+      // 파일이 있을 경우 Base64 인코딩된 파일 데이터를 추가
+      fileData: question.fileData || null, // 선택된 파일이 없으면 null로 처리
+    });
+    
     return response.data;
   } catch (error) {
     console.error("Error createQuestion:", error);

@@ -255,6 +255,15 @@ const InfoText = styled.p`
   background-color: transparent;
 `;
 
+const ImageContainer = styled.div`
+  margin-top: 20px;
+  img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+  }
+`;
+
 const AnswerSection = styled.div`
   margin-top: 20px;
   h4 {
@@ -309,6 +318,7 @@ const ActionButton = styled(Button)`
 
 
 export function QA() {
+  const [selectedFileBase64, setSelectedFileBase64] = useState(null); // Base64 인코딩된 파일 저장0912
   const [questions, setQuestions] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
@@ -326,6 +336,18 @@ export function QA() {
   const [currentUser, setCurrentUser] = useState(null);
   const [answerContent, setAnswerContent] = useState("");
   const pageSize = 5;
+
+  // 0912
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.readAsDataURL(file); // 파일을 Base64로 인코딩
+      reader.onloadend = () => {
+        setSelectedFileBase64(reader.result); // Base64 인코딩된 결과를 상태에 저장
+      };
+    }
+  };
 
   const fetchQuestions = async (page = 1, selectedCategory = "all") => {
     try {
@@ -385,7 +407,7 @@ export function QA() {
       alert("로그인 정보가 유효하지 않습니다.");
       return;
     }
-
+  
     try {
       const questionData = {
         lmsQaTitle: newQuestion.title,
@@ -396,11 +418,14 @@ export function QA() {
           userId: currentUser.userId,
           userNameKor: currentUser.userNameKor,
         },
+        // 파일이 선택되었을 경우 Base64 데이터를 포함
+        fileData: selectedFileBase64 || null, // 선택된 파일이 없을 때 null로 처리
       };
-      await createQuestion(questionData);
-
+  
+      await createQuestion(questionData); // createQuestion 호출 시 JSON 데이터 전송
+  
       alert("질문이 등록됐습니다.");
-
+  
       setNewQuestion({ title: "", content: "", category: "01" });
       setSelectedQuestion(null);
       fetchQuestions(currentPage, category);
@@ -637,6 +662,25 @@ export function QA() {
               placeholder="내용을 입력하세요"  // 내용 입력 필드에 placeholder 추가
             />
           </div>
+          <div>
+            <label>사진 첨부:</label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleFileChange} // 파일 선택 시 처리 함수
+            />
+          </div>
+          {/* Base64로 인코딩된 파일이 있으면 이미지 미리보기 렌더링 */}
+          {selectedFileBase64 && (
+            <div>
+              <img
+                src={selectedFileBase64}
+                alt="Selected"
+                style={{ width: "200px", height: "auto" }}
+              />
+            </div>
+          )}
+
           <button type="submit">질문 등록</button>
           <button type="button" onClick={() => goBackToList()}>취소</button>
         </QuestionForm>
@@ -658,6 +702,16 @@ export function QA() {
             <strong>답변 상태:</strong>{" "}
             {selectedQuestion.lmsQaAnswerCheck === "Y" ? "완료" : "대기"}
           </InfoText>
+
+          {/* 첨부된 이미지가 있으면 보여줌 */}
+          {selectedQuestion.filePath && (
+            <ImageContainer>
+              <img
+                src={`http://localhost:8080/uploads/${selectedQuestion.filePath.split('\\').pop()}`} // Windows 경로에서 파일 이름 추출
+                alt="첨부된 이미지"
+              />
+            </ImageContainer>
+          )}
 
           {selectedQuestion.lmsQaAnswerContent && (
             <AnswerSection>
